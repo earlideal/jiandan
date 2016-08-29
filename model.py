@@ -4,12 +4,16 @@ from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-engine = create_engine('sqlite:///model.sqlite')
+engine = create_engine('sqlite:///model.sqlite', echo=False)
 Model = declarative_base()
+Model.metadata.create_all(engine)
+Session = sessionmaker()
+Session.configure(bind=engine)
+session = Session()
 
 
-class User(Model):
-    __tablename__ = "user"
+class Person(Model):
+    __tablename__ = "person"
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
@@ -19,8 +23,8 @@ class ResearchProject(Model):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     type = Column(String)
-    user_id = Column(Integer, ForeignKey(User.id))
-    user = relationship(User)
+    user_id = Column(Integer, ForeignKey(Person.id))
+    user = relationship(Person)
 
 
 class PurchaseRequisition(Model):
@@ -28,8 +32,8 @@ class PurchaseRequisition(Model):
     id = Column(Integer, primary_key=True)
     title = Column(String)
     date = Column(Date, default=func.now())
-    applicant_id = Column(Integer, ForeignKey(User.id))
-    applicant = relationship(User)
+    applicant_id = Column(Integer, ForeignKey(Person.id))
+    applicant = relationship(Person)
     purchase_type = Column(String)
     project_id = Column(Integer, ForeignKey(ResearchProject.id))
     project = relationship(ResearchProject)
@@ -38,34 +42,24 @@ class PurchaseRequisition(Model):
     qualification = Column(String)
     review_group = Column(String)
 
-    def add(self):
-        print "add"
-        s = session()
-        s.add(self)
-        s.commit()
-
 
 class Contract(Model):
     __tablename__ = "contract"
     id = Column(Integer, primary_key=True)
 
-
-session = sessionmaker()
-session.configure(bind=engine)
-Model.metadata.create_all(engine)
-
-# user1 = User(name=u'蒋华超')
-# user2 = User(name=u'赵钱孙')
-# s.add(user1)
-# s.add(user2)
-# project = ResearchProject(name=u"高压超快光学平台", user=user1)
-# s.add(project)
-# p = PurchaseRequisition(title=u"太赫兹光谱系统", purchase_type=u"公开招标", applicant=user1, project=project)
-# s.add(p)
-# s.commit()
-# users = s.query(User).all()
-# for u in users:
-#     print u.name, u.id
-# purchases = s.query(PurchaseRequisition).all()
-# for p in purchases:
-#     print p.title, p.date, p.applicant.name, p.applicant_id, p.project.name
+    # from contextlib import contextmanager
+    #
+    # @contextmanager
+    # def session_scope():
+    #     session = Session()
+    #     try:
+    #         yield session
+    #         session.commit()
+    #     except:
+    #         session.rollback()
+    #         raise
+    #     finally:
+    #         session.close()
+    # with session_scope() as session:
+    #     all = session.query(Person).all()
+    #     return all
