@@ -38,6 +38,12 @@ class PurchaseRequisition(Model):
     qualification = Column(String)
     review_group = Column(String)
 
+    def add(self):
+        print "add"
+        s = session()
+        s.add(self)
+        s.commit()
+
 
 class Contract(Model):
     __tablename__ = "contract"

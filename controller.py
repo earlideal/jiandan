@@ -16,6 +16,7 @@ class RequisitionWindow(QtGui.QWidget):
 
     def _update_model(self):
         self.requisition.applicant = self.ui.comboBox_applicant.currentText()
+        self.requisition.add()
 
 
 if __name__ == '__main__':
