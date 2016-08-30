@@ -24,18 +24,32 @@ class Project(Model):
     leader = relationship(Staff)
 
 
+class ProcurementCategory(Model):
+    __tablename__ = "category"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+
+class ProcurementMethod(Model):
+    __tablename__ = "method"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+
 class Requisition(Model):
     __tablename__ = "requisition"
     id = Column(Integer, primary_key=True)
-    title = Column(String)
     date = Column(Date, default=func.now())
     applicant_id = Column(Integer, ForeignKey(Staff.id))
     applicant = relationship(Staff)
-    purchase_type = Column(String)
+    title = Column(String)
+    category_id = Column(Integer, ForeignKey(ProcurementCategory.id))
+    category = relationship(ProcurementCategory)
+    method_id = Column(Integer, ForeignKey(ProcurementMethod.id))
+    method = relationship(ProcurementMethod)
     project_id = Column(Integer, ForeignKey(Project.id))
     project = relationship(Project)
-    purchase_method = Column(String)
-    purchase_reason = Column(String)
+    request_reason = Column(String)
     tech_specification = Column(String)
 
 
@@ -50,42 +64,38 @@ Session.configure(bind=engine)
 session = Session()
 
 
-def generate_test_db():
-    su_fu_hai = Staff(name=u'苏付海')
-    liu_xiao_di = Staff(name=u'刘晓迪')
-    yang_xue = Staff(name=u'杨雪')
-    jiang_shu_qing = Staff(name=u'姜树清')
-    ding_jun_feng = Staff(name=u'丁俊峰')
-    wang_yuan = Staff(name=u'王媛')
-    jiang_hua_chao = Staff(name=u'蒋华超')
-    names = [u'苏付海', u'刘晓迪', u'杨雪', u'姜树清', u'丁俊峰', u'王媛', u'蒋华超']
+def preinstall_db():
+    names = [u'苏付海', u'刘晓迪', u'杨雪', u'姜树清', u'丁俊峰', u'王媛', u'蒋华超', u'Alex', u'Eugene']
+    staffs = []
+    for name in names:
+        staffs.append(Staff(name=name))
 
-    p1 = Project(grant_number='Y64NLXG362', name=u'极端高压超快光学实验平台', grant_type=u'中科院修购专项', leader=su_fu_hai)
-    p2 = Project(grant_number='Y64NLYZ251', name=u'高温高压下热导率原位测量', grant_type=u'中科院科研装备研制项目', leader=su_fu_hai)
-    p3 = Project(grant_number='Y64NLXG363', name=u'极端条件下新奇化学态的探索', grant_type=u'中科院修购专项', leader=su_fu_hai)
-    req = Requisition(title=u'实验室办公用品采购申请测试用例一', applicant=jiang, project=p1, purchase_method=u'公开招标',
-                      purchase_reason=u'该项目是中科院修购专项批准购买的专项设备。')
-    session.add_all([su_fu_hai, jiang, temp])
-    session.add(p1)
+    p1 = Project(grant_number='Y64NLXG362', name=u'极端高压超快光学实验平台', grant_type=u'中科院修购专项', leader=staffs[0])
+    p2 = Project(grant_number='Y64NLYZ251', name=u'高温高压下热导率原位测量系统研制', grant_type=u'中科院科研装备研制项目', leader=staffs[0])
+    p3 = Project(grant_number='Y54NL2150H', name=u'极端条件下新奇化学态的探索', grant_type=u'面上项目', leader=staffs[7])
+    p4 = Project(grant_number='Y54NL11507', name=u'高压下金刚石NV色心能级变化', grant_type=u'青年基金', leader=staffs[1])
+
+    categories_list = [u'仪器设备', u'研制加工', u'办公设备', u'仪器部件']
+    categories = []
+    for c in categories_list:
+        categories.append(ProcurementCategory(name=c))
+
+    method_list = [u'公开招标', u'邀请招标', u'竞争性磋商', u'竞争性谈判', u'询价', u'单一来源']
+    methods = []
+    for m in method_list:
+        methods.append(ProcurementMethod(name=m))
+
+    req = Requisition(title=u'实验室办公用品采购申请测试用例一', applicant=staffs[5], project=p2, category=categories[0],
+                      method=methods[0], request_reason=u'该项目是中科院修购专项批准购买的专项设备。')
+
+    session.add_all(staffs)
+    session.add_all(categories)
+    session.add_all(methods)
+    session.add_all([p1, p2, p3, p4])
     session.add(req)
-    session.commit()
-
-
-def test_db():
-    staffs = session.query(Staff).all()
-    for s in staffs:
-        print s.id, s.name
-    reqisitions = session.query(Requisition).filter_by(title=u'实验室办公用品采购申请测试用例一').all()
-    if len(reqisitions) > 0:
-        req = reqisitions[0]
-        print req.applicant.id, req.applicant.name, req.project.name, req.project.leader.name, req.project.grant_number, req.project.id
-        projects = session.query(Project).all()
-        for p in projects:
-            print p.id, p.name, p.grant_number
     session.commit()
 
 
 s = session.query(Staff).all()
 if len(s) == 0:
-    generate_test_db()
-# test_db()
+    preinstall_db()

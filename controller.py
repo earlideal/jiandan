@@ -16,13 +16,27 @@ class RequisitionWindow(QtGui.QWidget):
         self.ui.toolButton_reason_gen.clicked.connect(self._update_model)
 
     def _initialize(self):
-        names = [u'苏付海', u'刘晓迪', u'杨雪', u'姜树清', u'丁俊峰', u'王媛', u'蒋华超']
-        names.sort()
-        for n in names:
-            print n
-        staffs = session.query(model.Staff).all()
-        for s in staffs:
+        # 添加采购方式
+        self.ui.comboBox_purchase_method.addItems([u'', u'', u''])
+        # 枚举数据库中的全部员工信息
+        self.staffs = session.query(model.Staff).all()
+        for s in self.staffs:
             self.ui.comboBox_applicant.addItem(s.name)
+        self.ui.comboBox_applicant.setCurrentIndex(-1)
+        # 枚举数据库中的全部基金信息
+        self.projects = session.query(model.Project).all()
+        for p in self.projects:
+            self.ui.comboBox_project.addItem(p.grant_number)
+        self.ui.comboBox_project.currentIndexChanged.connect(self.show_project_info)
+        self.ui.comboBox_project.setCurrentIndex(-1)
+
+    def show_project_info(self):
+        text = unicode(self.ui.comboBox_project.currentText())
+        if text == "":
+            return
+        p = session.query(model.Project).filter_by(grant_number=text).all()[0]
+        info = p.leader.name + "-" + p.grant_type + "-" + p.name
+        self.ui.lineEdit_project_info.setText(info)
 
     def _update_model(self):
         request_title = unicode(self.ui.lineEdit_request_title.text())
@@ -31,7 +45,7 @@ class RequisitionWindow(QtGui.QWidget):
         purchase_type = unicode(self.ui.comboBox_purchase_type.currentText())
         grant_number = unicode(self.ui.comboBox_project.currentText())
         purchase_method = unicode(self.ui.comboBox_purchase_method.currentText())
-        is_budget = self.ui.radioButton_yes.isChecked()  # True/False
+        is_budget = self.ui.radioButton_yes.isChecked()
         if is_budget:
             budget_value = self.ui.doubleSpinBox_budget.value()
             budget = self.ui.doubleSpinBox_budget.text()
@@ -39,7 +53,8 @@ class RequisitionWindow(QtGui.QWidget):
             budget = ''
         purchase_reason = unicode(self.ui.lineEdit_purchase_reason.text())
         tech_specification = unicode(self.ui.lineEdit_tech_spec.text())
-
+        # TODO
+        # 需要检查表单为空的情况
         staffs = session.query(model.Staff).filter_by(name=request_applicant).all()
         if len(staffs) == 0:
             raise u'严重错误！未在数据库中找到选择的申请人，请联系系统管理员。'
@@ -57,7 +72,7 @@ class RequisitionWindow(QtGui.QWidget):
 
 if __name__ == '__main__':
     app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('Trebuchet MS', 9))
+    app.setFont(QtGui.QFont('lucida console', 9))
     window = RequisitionWindow()
     window.show()
     app.setStyle('windowsxp')
