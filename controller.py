@@ -12,25 +12,44 @@ class RequisitionWindow(QtGui.QWidget):
         super(RequisitionWindow, self).__init__()
         self.ui = requisition_template.Ui_Form()
         self.ui.setupUi(self)
-        self._initialize()
-        self.ui.toolButton_reason_gen.clicked.connect(self._update_model)
+        self._initialize_view()
+        self.ui.toolButton_reason_gen.clicked.connect(self._update_view_from_model)
 
-    def _initialize(self):
-        # 添加采购方式
-        self.ui.comboBox_purchase_method.addItems([u'', u'', u''])
+    def _initialize_view(self):
+        # 读取数据库中采购分类表，并显示在界面上
+        categories = session.query(model.PurchaseCategory).all()
+        self.category_names = []
+        for category in categories:
+            self.ui.comboBox_purchase_category.addItem(category.name)
+            self.category_names.append(category.name)
+
+        # 读取数据库中采购方式表，并显示在界面上
+        methods = session.query(model.PurchaseMethod).all()
+        self.method_names = []
+        for m in methods:
+            self.ui.comboBox_purchase_method.addItem(m.name)
+            self.method_names.append(m.name)
+
         # 枚举数据库中的全部员工信息
-        self.staffs = session.query(model.Staff).all()
-        for s in self.staffs:
-            self.ui.comboBox_applicant.addItem(s.name)
-        self.ui.comboBox_applicant.setCurrentIndex(-1)
+        staffs = session.query(model.Staff).all()
+        self.staff_names = []
+        for s in staffs:
+            self.staff_names.append(s.name)
+        # 将员工按照顺序排列显示，其中排列方式是unicode码，不是拼音
+        self.staff_names.sort()
+        self.ui.comboBox_applicant.addItems(self.staff_names)
+        self.ui.comboBox_applicant.setCurrentIndex(0)
         # 枚举数据库中的全部基金信息
-        self.projects = session.query(model.Project).all()
-        for p in self.projects:
+        projects = session.query(model.Project).all()
+        self.grant_numbers = []
+        for p in projects:
             self.ui.comboBox_project.addItem(p.grant_number)
-        self.ui.comboBox_project.currentIndexChanged.connect(self.show_project_info)
-        self.ui.comboBox_project.setCurrentIndex(-1)
+            self.grant_numbers.append(p.grant_number)
+        self.ui.comboBox_project.currentIndexChanged.connect(self._show_project_info)
+        self.ui.comboBox_project.setCurrentIndex(1)
 
-    def show_project_info(self):
+    def _show_project_info(self):
+        # 根据选择的课题号显示出课题基本信息
         text = unicode(self.ui.comboBox_project.currentText())
         if text == "":
             return
@@ -38,42 +57,59 @@ class RequisitionWindow(QtGui.QWidget):
         info = p.leader.name + "-" + p.grant_type + "-" + p.name
         self.ui.lineEdit_project_info.setText(info)
 
-    def _update_model(self):
+    def _update_model_from_view(self):
         request_title = unicode(self.ui.lineEdit_request_title.text())
         request_applicant = unicode(self.ui.comboBox_applicant.currentText())
         request_date = unicode(self.ui.dateEdit_request_date.date())
-        purchase_type = unicode(self.ui.comboBox_purchase_type.currentText())
         grant_number = unicode(self.ui.comboBox_project.currentText())
+        purchase_category = unicode(self.ui.comboBox_purchase_category.currentText())
         purchase_method = unicode(self.ui.comboBox_purchase_method.currentText())
         is_budget = self.ui.radioButton_yes.isChecked()
         if is_budget:
             budget_value = self.ui.doubleSpinBox_budget.value()
-            budget = self.ui.doubleSpinBox_budget.text()
         else:
-            budget = ''
-        purchase_reason = unicode(self.ui.lineEdit_purchase_reason.text())
-        tech_specification = unicode(self.ui.lineEdit_tech_spec.text())
-        # TODO
-        # 需要检查表单为空的情况
+            budget_value = 0
+        request_reason = unicode(self.ui.lineEdit_request_reason.text())
+        technical_spec = unicode(self.ui.lineEdit_tech_spec.text())
+
+        # TODO 需要检查表单为空的情况
+
         staffs = session.query(model.Staff).filter_by(name=request_applicant).all()
-        if len(staffs) == 0:
-            raise u'严重错误！未在数据库中找到选择的申请人，请联系系统管理员。'
-
         projects = session.query(model.Project).filter_by(grant_number=grant_number).all()
-        if len(projects) == 0:
-            raise u'严重错误！未在数据库中找到选择的课题号，请联系系统管理员。'
+        categories = session.query(model.PurchaseCategory).filter_by(name=purchase_category).all()
+        methods = session.query(model.PurchaseMethod).filter_by(name=purchase_method).all()
 
-        requisition = Requisition(title=request_title, applicant=staffs[0], project=projects[0],
-                                  purchase_method=u'公开招标',
-                                  purchase_reason=u'该项目是中科院修购专项批准购买的专项设备。')
+        # TODO 此处需要对添加和修改做判断，并作不同处理
+
+        requisition = model.Requisition(title=request_title, applicant=staffs[0], project=projects[0],
+                                        purchase_category=categories[0], is_budget=is_budget,
+                                        budget_amount=budget_value, purchase_method=methods[0],
+                                        request_reason=u'该项目是中科院修购专项批准购买的专项设备。')
         session.add(requisition)
         session.commit()
+        print u'添加成功！'
+
+    def _update_view_from_model(self):
+        title = u'大功率飞秒激光器系统'
+        req = session.query(model.Requisition).filter_by(title=title).all()
+        if len(req) == 0:
+            print u'未在系统中找到记录。'
+        else:
+            r = req[0]
+            self.ui.lineEdit_request_title.setText(r.title)
+            self.ui.comboBox_applicant.setCurrentIndex(self.staff_names.index(r.applicant.name))
+            self.ui.dateEdit_request_date.setDate(r.date)
+            self.ui.comboBox_project.setCurrentIndex(self.grant_numbers.index(r.project.grant_number))
+            self.ui.comboBox_purchase_category.setCurrentIndex(self.category_names.index(r.purchase_category.name))
+            self.ui.comboBox_purchase_method.setCurrentIndex(self.method_names.index(r.purchase_method.name))
+            self.ui.radioButton_yes.setChecked(r.is_budget)
+            self.ui.lineEdit_request_reason.setText(r.request_reason)
 
 
 if __name__ == '__main__':
     app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('lucida console', 9))
+    app.setFont(QtGui.QFont('trebuchet ms', 9))
     window = RequisitionWindow()
     window.show()
-    app.setStyle('windowsxp')
+    app.setStyle('cleanlooks')
     app.exec_()

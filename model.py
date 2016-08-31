@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
+
+if __name__ == '__main__':
+    if os.path.exists('model.sqlite'):
+        os.remove('model.sqlite')
 
 engine = create_engine('sqlite:///model.sqlite', echo=False)
 Model = declarative_base()
@@ -24,14 +30,14 @@ class Project(Model):
     leader = relationship(Staff)
 
 
-class ProcurementCategory(Model):
-    __tablename__ = "category"
+class PurchaseCategory(Model):
+    __tablename__ = "purchase_category"
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
 
-class ProcurementMethod(Model):
-    __tablename__ = "method"
+class PurchaseMethod(Model):
+    __tablename__ = "purchase_method"
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
@@ -43,14 +49,16 @@ class Requisition(Model):
     applicant_id = Column(Integer, ForeignKey(Staff.id))
     applicant = relationship(Staff)
     title = Column(String)
-    category_id = Column(Integer, ForeignKey(ProcurementCategory.id))
-    category = relationship(ProcurementCategory)
-    method_id = Column(Integer, ForeignKey(ProcurementMethod.id))
-    method = relationship(ProcurementMethod)
+    purchase_category_id = Column(Integer, ForeignKey(PurchaseCategory.id))
+    purchase_category = relationship(PurchaseCategory)
+    purchase_method_id = Column(Integer, ForeignKey(PurchaseMethod.id))
+    purchase_method = relationship(PurchaseMethod)
     project_id = Column(Integer, ForeignKey(Project.id))
     project = relationship(Project)
+    is_budget = Column(Boolean)
+    budget_amount = Column(Float)
     request_reason = Column(String)
-    tech_specification = Column(String)
+    technical_spec = Column(String)
 
 
 class Contract(Model):
@@ -78,24 +86,25 @@ def preinstall_db():
     categories_list = [u'仪器设备', u'研制加工', u'办公设备', u'仪器部件']
     categories = []
     for c in categories_list:
-        categories.append(ProcurementCategory(name=c))
+        categories.append(PurchaseCategory(name=c))
 
     method_list = [u'公开招标', u'邀请招标', u'竞争性磋商', u'竞争性谈判', u'询价', u'单一来源']
     methods = []
     for m in method_list:
-        methods.append(ProcurementMethod(name=m))
+        methods.append(PurchaseMethod(name=m))
 
-    req = Requisition(title=u'实验室办公用品采购申请测试用例一', applicant=staffs[5], project=p2, category=categories[0],
-                      method=methods[0], request_reason=u'该项目是中科院修购专项批准购买的专项设备。')
+    req = Requisition(title=u'拟采购的实验设备', applicant=staffs[5], project=p2, purchase_category=categories[0],
+                      is_budget=True, budget_amount=100000, purchase_method=methods[0],
+                      request_reason=u'该项目是中科院修购专项批准购买的专项设备。')
 
     session.add_all(staffs)
     session.add_all(categories)
     session.add_all(methods)
     session.add_all([p1, p2, p3, p4])
     session.add(req)
+
     session.commit()
 
 
-s = session.query(Staff).all()
-if len(s) == 0:
+if __name__ == '__main__':
     preinstall_db()

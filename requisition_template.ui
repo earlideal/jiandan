@@ -148,7 +148,7 @@
          </widget>
         </item>
         <item row="1" column="5">
-         <widget class="QComboBox" name="comboBox_purchase_type">
+         <widget class="QComboBox" name="comboBox_purchase_category">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -270,7 +270,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEdit_purchase_reason"/>
+         <widget class="QLineEdit" name="lineEdit_request_reason"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_19">
