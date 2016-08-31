@@ -139,7 +139,7 @@ class Ui_Form(object):
         self.label_18.setObjectName(_fromUtf8("label_18"))
         self.gridLayout_4.addWidget(self.label_18, 0, 0, 1, 1)
         self.lineEdit_request_reason = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_request_reason.setObjectName(_fromUtf8("lineEdit_purchase_reason"))
+        self.lineEdit_request_reason.setObjectName(_fromUtf8("lineEdit_request_reason"))
         self.gridLayout_4.addWidget(self.lineEdit_request_reason, 0, 1, 1, 1)
         self.label_19 = QtGui.QLabel(self.groupBox)
         self.label_19.setObjectName(_fromUtf8("label_19"))

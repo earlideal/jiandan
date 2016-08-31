@@ -111,5 +111,5 @@ if __name__ == '__main__':
     app.setFont(QtGui.QFont('trebuchet ms', 9))
     window = RequisitionWindow()
     window.show()
-    app.setStyle('cleanlooks')
+    # app.setStyle('cleanlooks')
     app.exec_()

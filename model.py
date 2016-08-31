@@ -61,9 +61,23 @@ class Requisition(Model):
     technical_spec = Column(String)
 
 
+class Company(Model):
+    __tablename__ = "company"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    contact = Column(String)
+    telephone = Column(String)
+    address = Column(String)
+
+
 class Contract(Model):
     __tablename__ = "contract"
     id = Column(Integer, primary_key=True)
+    contract_name = Column(String)
+    contract_number = Column(String)
+    sign_date = Column(Date)
+    company_id = Column(Integer, ForeignKey(Company.id))
+    company = relationship(Company)
 
 
 Model.metadata.create_all(engine)
@@ -102,6 +116,12 @@ def preinstall_db():
     session.add_all(methods)
     session.add_all([p1, p2, p3, p4])
     session.add(req)
+    ####################################################################################################################
+
+    # 添加公司信息
+    company = Company(name=u'安徽长和进出口有限公司', contact=u'江云云', telephone=u'0551-64260008',
+                      address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
+    session.add(company)
 
     session.commit()
 
