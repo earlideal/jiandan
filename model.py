@@ -75,7 +75,7 @@ class Contract(Model):
     id = Column(Integer, primary_key=True)
     contract_name = Column(String)
     contract_number = Column(String)
-    sign_date = Column(Date)
+    sign_date = Column(Date, default=func.now())
     company_id = Column(Integer, ForeignKey(Company.id))
     company = relationship(Company)
 
@@ -116,13 +116,15 @@ def preinstall_db():
     session.add_all(methods)
     session.add_all([p1, p2, p3, p4])
     session.add(req)
+
     ####################################################################################################################
 
     # 添加公司信息
     company = Company(name=u'安徽长和进出口有限公司', contact=u'江云云', telephone=u'0551-64260008',
                       address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
+    contract = Contract(contract_name=u'低温恒温器代理进口协议', contract_number='AHCC20160001', company=company)
     session.add(company)
-
+    session.add(contract)
     session.commit()
 
 
