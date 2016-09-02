@@ -40,15 +40,17 @@ class RequisitionWindow(QtGui.QWidget):
         self.ui.comboBox_applicant.addItems(self.staff_names)
         self.ui.comboBox_applicant.setCurrentIndex(0)
         # 枚举数据库中的全部基金信息
+        self.ui.comboBox_project.currentIndexChanged.connect(self._update_project_info)
         projects = session.query(model.Project).all()
         self.grant_numbers = []
         for p in projects:
             self.ui.comboBox_project.addItem(p.grant_number)
             self.grant_numbers.append(p.grant_number)
-        self.ui.comboBox_project.currentIndexChanged.connect(self._show_project_info)
-        self.ui.comboBox_project.setCurrentIndex(1)
 
-    def _show_project_info(self):
+        # 设置当天日期
+        self.ui.dateEdit_request_date.setDate(QtCore.QDate.currentDate())
+
+    def _update_project_info(self):
         # 根据选择的课题号显示出课题基本信息
         text = unicode(self.ui.comboBox_project.currentText())
         if text == "":
@@ -60,7 +62,7 @@ class RequisitionWindow(QtGui.QWidget):
     def _update_model_from_view(self):
         request_title = unicode(self.ui.lineEdit_request_title.text())
         request_applicant = unicode(self.ui.comboBox_applicant.currentText())
-        request_date = unicode(self.ui.dateEdit_request_date.date())
+        request_date = self.ui.dateEdit_request_date.date().toPyDate()
         grant_number = unicode(self.ui.comboBox_project.currentText())
         purchase_category = unicode(self.ui.comboBox_purchase_category.currentText())
         purchase_method = unicode(self.ui.comboBox_purchase_method.currentText())
@@ -87,7 +89,7 @@ class RequisitionWindow(QtGui.QWidget):
                                         request_reason=u'该项目是中科院修购专项批准购买的专项设备。')
         session.add(requisition)
         session.commit()
-        print u'添加成功！'
+        print u'添加请购信息成功！'
 
     def _update_view_from_model(self):
         title = u'大功率飞秒激光器系统'

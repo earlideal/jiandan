@@ -16,14 +16,11 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
-
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -120,6 +117,7 @@ class Ui_Form(object):
         self.dateEdit_sign_date.setDisplayFormat(_translate("Form", "yyyy-M-d", None))
         self.label_3.setText(_translate("Form", "合同金额", None))
         self.label_5.setText(_translate("Form", "合同供方", None))
+        self.lineEdit_contract_name.setText(_translate("Form", "测试用例合同名称随机", None))
         self.label_2.setText(_translate("Form", "合同编号", None))
         self.label.setText(_translate("Form", "合同名称", None))
         self.label_8.setText(_translate("Form", "联系地址", None))

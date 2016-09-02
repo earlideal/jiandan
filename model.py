@@ -75,6 +75,7 @@ class Contract(Model):
     id = Column(Integer, primary_key=True)
     contract_name = Column(String)
     contract_number = Column(String)
+    contract_amount = Column(Float, default=0)
     sign_date = Column(Date, default=func.now())
     company_id = Column(Integer, ForeignKey(Company.id))
     company = relationship(Company)
@@ -86,6 +87,7 @@ Session.configure(bind=engine)
 session = Session()
 
 
+# 模拟数据
 def preinstall_db():
     names = [u'苏付海', u'刘晓迪', u'杨雪', u'姜树清', u'丁俊峰', u'王媛', u'蒋华超', u'Alex', u'Eugene']
     staffs = []
@@ -120,10 +122,14 @@ def preinstall_db():
     ####################################################################################################################
 
     # 添加公司信息
-    company = Company(name=u'安徽长和进出口有限公司', contact=u'江云云', telephone=u'0551-64260008',
-                      address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
-    contract = Contract(contract_name=u'低温恒温器代理进口协议', contract_number='AHCC20160001', company=company)
-    session.add(company)
+    chang_he = Company(name=u'安徽长和进出口有限公司', contact=u'江云云', telephone=u'0551-64260008',
+                       address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
+    ke_hua = Company(name=u'安徽省科华贸易有限责任公司', contact=u'杨国华', telephone=u'0551-65392835',
+                     address=u'安徽省合肥市长江西路677号高新开发区昌河科创大厦702室')
+    contract = Contract(contract_name=u'低温恒温器代理进口协议', contract_number='AHCC20160001',
+                        contract_amount=123456.78, company=chang_he)
+    session.add(chang_he)
+    session.add(ke_hua)
     session.add(contract)
     session.commit()
 
