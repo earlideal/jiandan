@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 
 import model
 import requisition_template
@@ -55,7 +55,7 @@ class RequisitionWindow(QtGui.QWidget):
         text = unicode(self.ui.comboBox_project.currentText())
         if text == "":
             return
-        p = session.query(model.Project).filter_by(grant_number=text).all()[0]
+        p = session.query(model.Project).filter_by(grant_number=text).first()
         info = p.leader.name + "-" + p.grant_type + "-" + p.name
         self.ui.lineEdit_project_info.setText(info)
 
@@ -76,16 +76,16 @@ class RequisitionWindow(QtGui.QWidget):
 
         # TODO 需要检查表单为空的情况
 
-        staffs = session.query(model.Staff).filter_by(name=request_applicant).all()
-        projects = session.query(model.Project).filter_by(grant_number=grant_number).all()
-        categories = session.query(model.PurchaseCategory).filter_by(name=purchase_category).all()
-        methods = session.query(model.PurchaseMethod).filter_by(name=purchase_method).all()
+        staff = session.query(model.Staff).filter_by(name=request_applicant).first()
+        proj = session.query(model.Project).filter_by(grant_number=grant_number).first()
+        category = session.query(model.PurchaseCategory).filter_by(name=purchase_category).first()
+        methods = session.query(model.PurchaseMethod).filter_by(name=purchase_method).first()
 
         # TODO 此处需要对添加和修改做判断，并作不同处理
 
-        requisition = model.Requisition(title=request_title, applicant=staffs[0], project=projects[0],
-                                        purchase_category=categories[0], is_budget=is_budget,
-                                        budget_amount=budget_value, purchase_method=methods[0],
+        requisition = model.Requisition(title=request_title, applicant=staff, project=proj,
+                                        purchase_category=category, is_budget=is_budget,
+                                        budget_amount=budget_value, purchase_method=methods,
                                         request_reason=u'该项目是中科院修购专项批准购买的专项设备。')
         session.add(requisition)
         session.commit()
@@ -93,11 +93,8 @@ class RequisitionWindow(QtGui.QWidget):
 
     def _update_view_from_model(self):
         title = u'大功率飞秒激光器系统'
-        req = session.query(model.Requisition).filter_by(title=title).all()
-        if len(req) == 0:
-            print u'未在系统中找到记录。'
-        else:
-            r = req[0]
+        req = session.query(model.Requisition).filter_by(title=title).first()
+        if req is not None:
             self.ui.lineEdit_request_title.setText(r.title)
             self.ui.comboBox_applicant.setCurrentIndex(self.staff_names.index(r.applicant.name))
             self.ui.dateEdit_request_date.setDate(r.date)
@@ -113,5 +110,4 @@ if __name__ == '__main__':
     app.setFont(QtGui.QFont('trebuchet ms', 9))
     window = RequisitionWindow()
     window.show()
-    # app.setStyle('cleanlooks')
     app.exec_()

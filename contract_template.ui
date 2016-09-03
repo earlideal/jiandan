@@ -32,6 +32,9 @@
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="5">
          <widget class="QLineEdit" name="lineEdit_company_telephone">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -64,7 +67,11 @@
          <widget class="QLineEdit" name="lineEdit_contract_number"/>
         </item>
         <item row="1" column="3">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_contract_amount"/>
+         <widget class="QDoubleSpinBox" name="doubleSpinBox_contract_amount">
+          <property name="maximum">
+           <double>999999999.990000009536743</double>
+          </property>
+         </widget>
         </item>
         <item row="1" column="5">
          <widget class="QDateEdit" name="dateEdit_sign_date">
@@ -103,6 +110,9 @@
         </item>
         <item row="3" column="1" colspan="4">
          <widget class="QLineEdit" name="lineEdit_company_address">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -138,6 +148,9 @@
         </item>
         <item row="2" column="3">
          <widget class="QLineEdit" name="lineEdit_company_contact">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>

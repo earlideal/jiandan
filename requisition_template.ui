@@ -87,6 +87,9 @@
         </item>
         <item row="2" column="3" colspan="3">
          <widget class="QLineEdit" name="lineEdit_project_info">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -104,7 +107,7 @@
            </size>
           </property>
           <property name="text">
-           <string>大功率飞秒激光器系统</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -181,6 +184,9 @@
             <width>100</width>
             <height>0</height>
            </size>
+          </property>
+          <property name="maximum">
+           <double>999999999.990000009536743</double>
           </property>
          </widget>
         </item>

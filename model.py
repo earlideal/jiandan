@@ -15,13 +15,17 @@ Model = declarative_base()
 
 
 class Staff(Model):
-    __tablename__ = "staff"
+    __tablename__ = "staffs"
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
+    def __init__(self, name):
+        super(Staff, self).__init__()
+        self.name = name
+
 
 class Project(Model):
-    __tablename__ = "project"
+    __tablename__ = "projects"
     id = Column(Integer, primary_key=True)
     grant_number = Column(String, unique=False)
     name = Column(String)
@@ -31,19 +35,19 @@ class Project(Model):
 
 
 class PurchaseCategory(Model):
-    __tablename__ = "purchase_category"
+    __tablename__ = "purchase_categories"
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
 
 class PurchaseMethod(Model):
-    __tablename__ = "purchase_method"
+    __tablename__ = "purcase_methods"
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
 
 class Requisition(Model):
-    __tablename__ = "requisition"
+    __tablename__ = "requisitions"
     id = Column(Integer, primary_key=True)
     date = Column(Date, default=func.now())
     applicant_id = Column(Integer, ForeignKey(Staff.id))
@@ -62,7 +66,7 @@ class Requisition(Model):
 
 
 class Company(Model):
-    __tablename__ = "company"
+    __tablename__ = "companies"
     id = Column(Integer, primary_key=True)
     name = Column(String)
     contact = Column(String)
@@ -71,7 +75,7 @@ class Company(Model):
 
 
 class Contract(Model):
-    __tablename__ = "contract"
+    __tablename__ = "contracts"
     id = Column(Integer, primary_key=True)
     contract_name = Column(String)
     contract_number = Column(String)
@@ -104,9 +108,9 @@ def preinstall_db():
     for c in categories_list:
         categories.append(PurchaseCategory(name=c))
 
-    method_list = [u'公开招标', u'邀请招标', u'竞争性磋商', u'竞争性谈判', u'询价', u'单一来源']
+    methods_list = [u'公开招标', u'邀请招标', u'竞争性磋商', u'竞争性谈判', u'询价', u'单一来源']
     methods = []
-    for m in method_list:
+    for m in methods_list:
         methods.append(PurchaseMethod(name=m))
 
     req = Requisition(title=u'拟采购的实验设备', applicant=staffs[5], project=p2, purchase_category=categories[0],
@@ -122,14 +126,17 @@ def preinstall_db():
     ####################################################################################################################
 
     # 添加公司信息
-    chang_he = Company(name=u'安徽长和进出口有限公司', contact=u'江云云', telephone=u'0551-64260008',
-                       address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
-    ke_hua = Company(name=u'安徽省科华贸易有限责任公司', contact=u'杨国华', telephone=u'0551-65392835',
+    changhe = Company(name=u'安徽长和进出口有限公司', contact=u'江云云', telephone=u'0551-64260008',
+                      address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
+
+    kehua = Company(name=u'安徽省科华贸易有限责任公司', contact=u'杨国华', telephone=u'0551-65392835',
                      address=u'安徽省合肥市长江西路677号高新开发区昌河科创大厦702室')
-    contract = Contract(contract_name=u'低温恒温器代理进口协议', contract_number='AHCC20160001',
-                        contract_amount=123456.78, company=chang_he)
-    session.add(chang_he)
-    session.add(ke_hua)
+
+    contract = Contract(contract_name=u'代理进口协议示例一', contract_number='AHCC20160001',
+                        contract_amount=123456.78, company=changhe)
+
+    session.add(changhe)
+    session.add(kehua)
     session.add(contract)
     session.commit()
 

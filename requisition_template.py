@@ -16,14 +16,11 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
-
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -63,6 +60,7 @@ class Ui_Form(object):
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.gridLayout.addWidget(self.label_4, 0, 0, 1, 1)
         self.lineEdit_project_info = QtGui.QLineEdit(self.groupBox)
+        self.lineEdit_project_info.setEnabled(False)
         self.lineEdit_project_info.setText(_fromUtf8(""))
         self.lineEdit_project_info.setReadOnly(True)
         self.lineEdit_project_info.setObjectName(_fromUtf8("lineEdit_project_info"))
@@ -102,6 +100,7 @@ class Ui_Form(object):
         self.doubleSpinBox_budget = QtGui.QDoubleSpinBox(self.groupBox)
         self.doubleSpinBox_budget.setEnabled(False)
         self.doubleSpinBox_budget.setMinimumSize(QtCore.QSize(100, 0))
+        self.doubleSpinBox_budget.setMaximum(999999999.99)
         self.doubleSpinBox_budget.setObjectName(_fromUtf8("doubleSpinBox_budget"))
         self.gridLayout_3.addWidget(self.doubleSpinBox_budget, 0, 5, 1, 1)
         self.label_14 = QtGui.QLabel(self.groupBox)

@@ -13,7 +13,7 @@ class ContractWindow(QtGui.QWidget):
         self.ui = contract_template.Ui_Form()
         self.ui.setupUi(self)
         self._initialize_view()
-        self.ui.pushButton.clicked.connect(self._update_model_from_view)
+        self.ui.pushButton.clicked.connect(self._update_view_from_model)
 
     def _initialize_view(self):
         self.ui.comboBox_company.currentIndexChanged.connect(self._update_company_info)
@@ -50,7 +50,16 @@ class ContractWindow(QtGui.QWidget):
         print u'合同信息存储成功'
 
     def _update_view_from_model(self):
-        pass
+        contract_name = u'代理进口协议示例一'
+        contract = session.query(model.Contract).filter_by(contract_name=contract_name).first()
+        if contract is not None:
+            self.ui.lineEdit_contract_name.setText(contract.contract_name)
+            self.ui.lineEdit_contract_number.setText(contract.contract_number)
+            self.ui.doubleSpinBox_contract_amount.setValue(contract.contract_amount)
+            self.ui.dateEdit_sign_date.setDate(contract.sign_date)
+            name = contract.company.name
+            self.ui.comboBox_company.setCurrentIndex(self.company_names.index(name))
+            self._update_company_info()
 
 
 if __name__ == '__main__':
