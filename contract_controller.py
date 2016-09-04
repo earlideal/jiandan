@@ -13,7 +13,7 @@ class ContractWindow(QtGui.QWidget):
         self.ui = contract_template.Ui_Form()
         self.ui.setupUi(self)
         self._initialize_view()
-        self.ui.pushButton.clicked.connect(self._update_view_from_model)
+        self.ui.pushButton_preset_companies.clicked.connect(self._update_view_from_model)
 
     def _initialize_view(self):
         self.ui.comboBox_company.currentIndexChanged.connect(self._update_company_info)

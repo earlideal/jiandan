@@ -13,9 +13,13 @@ class RequisitionWindow(QtGui.QWidget):
         self.ui = requisition_template.Ui_Form()
         self.ui.setupUi(self)
         self._initialize_view()
-        self.ui.toolButton_reason_gen.clicked.connect(self._update_view_from_model)
+        self.ui.pushButton_preset_reasons.clicked.connect(self._update_view_from_model)
 
     def _initialize_view(self):
+        # TODO 将标签内容全部右对齐
+        for label in self.ui.gridLayout.findChildren(QtGui.QLabel):
+            print label.objectName()
+
         # 读取数据库中采购分类表，并显示在界面上
         categories = session.query(model.PurchaseCategory).all()
         self.category_names = []
@@ -35,6 +39,7 @@ class RequisitionWindow(QtGui.QWidget):
         self.staff_names = []
         for s in staffs:
             self.staff_names.append(s.name)
+
         # 将员工按照顺序排列显示，其中排列方式是unicode码，不是拼音
         self.staff_names.sort()
         self.ui.comboBox_applicant.addItems(self.staff_names)
