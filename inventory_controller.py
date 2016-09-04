@@ -17,7 +17,7 @@ class InventoryWindow(QtGui.QWidget):
         self.ui.setupUi(self)
 
         self.model = QtGui.QStandardItemModel()
-        headers = [u'产品名称', u'型号规格', u'单位', u'数量', u'预算单价', u'预算金额', u'经销商', u'结算单价', u'结算金额', u'资产类型']
+        headers = [u'产品名称', u'型号规格', u'单位', u'数量', u'经销商', u'预算单价', u'预算金额', u'结算单价', u'结算金额', u'资产类型', u'']
         self.model.setHorizontalHeaderLabels(headers)
         self.ui.treeView.setModel(self.model)
         self.model.itemChanged.connect(self.on_item_changed)
@@ -30,6 +30,7 @@ class InventoryWindow(QtGui.QWidget):
         self.ui.toolButton_export.clicked.connect(self._list_all_items)
         self.ui.toolButton_up.clicked.connect(partial(self._move_item, self.UP))
         self.ui.toolButton_down.clicked.connect(partial(self._move_item, self.DOWN))
+
         self.editor = EditorDialog()
 
     def _append_item(self):
