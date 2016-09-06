@@ -16,17 +16,21 @@ class InventoryWindow(QtGui.QWidget):
         self.ui = inventory_template.Ui_Form()
         self.ui.setupUi(self)
 
-        self.model = QtGui.QStandardItemModel()
+        self.table_model = QtGui.QStandardItemModel()
         headers = [u'产品名称', u'型号规格', u'生产厂家', u'资产类型', u'单位', u'数量', u'原始报价',
                    u'报价币种', u'请购价格', u'请购金额', u'结算价格', u'结算金额']
-        self.model.setHorizontalHeaderLabels(headers)
-        self.ui.tableView.setModel(self.model)
+        self.table_model.setHorizontalHeaderLabels(headers)
+        self.ui.tableView.setModel(self.table_model)
         self.ui.tableView.setAlternatingRowColors(True)
 
         self.ui.toolButton_append.clicked.connect(self._append_item)
         self.ui.toolButton_remove.clicked.connect(self._remove_item)
         self.ui.toolButton_up.clicked.connect(partial(self._move_item, self.UP))
         self.ui.toolButton_down.clicked.connect(partial(self._move_item, self.DOWN))
+
+        self.ui.doubleSpinBox_acceptance_total.valueChanged.connect(self._recaculate_acceptance_price)
+
+        self.inventories = []
 
         self.editor = EditorDialog()
 
@@ -35,6 +39,7 @@ class InventoryWindow(QtGui.QWidget):
         # self.editor.setWindowModality(QtCore.Qt.ApplicationModal)
         if self.editor.exec_():
             data = self.editor.get_data()
+            self.inventories.append(data)
             row = []
             keys = ['name', 'model', 'manufacture', 'property_type', 'unit', 'quantity', 'quotation_price',
                     'quotation_currency', 'requisition_price', 'requisition_sum', 'acceptance_price', 'acceptance_sum']
@@ -47,25 +52,22 @@ class InventoryWindow(QtGui.QWidget):
                 # 设置首列为可选择
                 row[0].setCheckable(True)
 
-            self.model.appendRow(row)
+            self.table_model.appendRow(row)
 
             # 让表格的列宽自适应内容变化
             # self.ui.tableView.resizeColumnsToContents()
 
             # 获取表格中某一格内容的方法
-            self.model.item(0, 6).text()
+            self.table_model.item(0, 6).text()
 
     def _remove_item(self):
         items = []
-        for i in range(self.model.rowCount()):
-            item = self.model.item(i)
+        for i in range(self.table_model.rowCount()):
+            item = self.table_model.item(i)
             if item.checkState():
                 items.append(item)
         for i in items:
-            self.model.removeRow(i.row())
-
-    def edit_item(self):
-        pass
+            self.table_model.removeRow(i.row())
 
     def _move_item(self, direction):
         if direction not in (self.DOWN, self.UP):
@@ -79,7 +81,7 @@ class InventoryWindow(QtGui.QWidget):
         items = []
         indexes = sorted(selected_rows, key=lambda x: x.row(), reverse=(direction == self.DOWN))
 
-        model = self.model
+        model = self.table_model
         for index in indexes:
             item = model.itemFromIndex(index)
             items.append(item)
@@ -94,3 +96,11 @@ class InventoryWindow(QtGui.QWidget):
         selection_model.clear()
         for item in items:
             selection_model.select(item.index(), selection_model.Select | selection_model.Rows)
+
+    def _recaculate_requisition_price(self):
+        pass
+
+    def _recaculate_acceptance_price(self):
+        for data_dict in self.inventories:
+            for k in data_dict:
+                print data_dict[k]
