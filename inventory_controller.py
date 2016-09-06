@@ -53,7 +53,7 @@ class InventoryWindow(QtGui.QWidget):
             # self.ui.tableView.resizeColumnsToContents()
 
             # 获取表格中某一格内容的方法
-            print self.model.item(0, 6).text()
+            self.model.item(0, 6).text()
 
     def _remove_item(self):
         items = []
@@ -71,16 +71,15 @@ class InventoryWindow(QtGui.QWidget):
         if direction not in (self.DOWN, self.UP):
             return
 
-        model = self.model
         selection_model = self.ui.tableView.selectionModel()
         selected_rows = selection_model.selectedRows()
         if not selected_rows:
             return
 
         items = []
-        indexes = sorted(selected_rows, key=lambda x: x.row(),
-                         reverse=(direction == self.DOWN))
+        indexes = sorted(selected_rows, key=lambda x: x.row(), reverse=(direction == self.DOWN))
 
+        model = self.model
         for index in indexes:
             item = model.itemFromIndex(index)
             items.append(item)
@@ -95,4 +94,3 @@ class InventoryWindow(QtGui.QWidget):
         selection_model.clear()
         for item in items:
             selection_model.select(item.index(), selection_model.Select | selection_model.Rows)
-
