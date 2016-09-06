@@ -85,6 +85,16 @@ class Contract(Model):
     company = relationship(Company)
 
 
+class InventoryModel(Model):
+    __tablename__ = "inventories"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    model = Column(String)
+    property_type = Column(String)
+    unit = Column(String)
+    quantity = Column(String)
+
+
 Model.metadata.create_all(engine)
 Session = sessionmaker()
 Session.configure(bind=engine)
@@ -130,7 +140,7 @@ def preinstall_db():
                       address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
 
     kehua = Company(name=u'安徽省科华贸易有限责任公司', contact=u'杨国华', telephone=u'0551-65392835',
-                     address=u'安徽省合肥市长江西路677号高新开发区昌河科创大厦702室')
+                    address=u'安徽省合肥市长江西路677号高新开发区昌河科创大厦702室')
 
     contract = Contract(contract_name=u'代理进口协议示例一', contract_number='AHCC20160001',
                         contract_amount=123456.78, company=changhe)

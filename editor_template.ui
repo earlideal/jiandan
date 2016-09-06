@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>786</width>
+    <width>773</width>
     <height>360</height>
    </rect>
   </property>
@@ -16,79 +16,140 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="3">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_quantity"/>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEdit_name">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item row="0" column="3">
-      <widget class="QLineEdit" name="lineEdit_model"/>
-     </item>
-     <item row="1" column="4">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>预算价格</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      <widget class="QLineEdit" name="lineEdit_model">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
        </property>
       </widget>
      </item>
-     <item row="1" column="6">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>预算金额</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     <item row="0" column="5">
+      <widget class="QLineEdit" name="lineEdit_manufacture">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_unit"/>
-     </item>
-     <item row="1" column="7">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_budget_sum"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>计价单位</string>
+     <item row="2" column="3">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_requisition_sum">
+       <property name="enabled">
+        <bool>false</bool>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="5">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_acceptance_price">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
        </property>
       </widget>
      </item>
      <item row="1" column="5">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_budget_price"/>
-     </item>
-     <item row="0" column="5">
-      <widget class="QLineEdit" name="lineEdit_manufacture"/>
-     </item>
-     <item row="0" column="6">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>经销商</string>
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_quotation_price">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </widget>
+     </item>
+     <item row="1" column="7">
+      <widget class="QComboBox" name="comboBox_currency">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="7">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_acceptance_sum">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_requisition_price">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
        </property>
       </widget>
      </item>
      <item row="0" column="7">
-      <widget class="QLineEdit" name="lineEdit_distributor"/>
-     </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>生产厂家</string>
+      <widget class="QComboBox" name="comboBox_property_type">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_quantity">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_unit">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
        </property>
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_2">
        <property name="text">
         <string>产品名称</string>
        </property>
@@ -97,11 +158,8 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_acceptance_price"/>
-     </item>
      <item row="0" column="2">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="label_3">
        <property name="text">
         <string>型号规格</string>
        </property>
@@ -110,15 +168,38 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_name">
+     <item row="0" column="4">
+      <widget class="QLabel" name="label_4">
        <property name="text">
-        <string/>
+        <string>生产厂家</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>资产类型</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>单位</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="label_7">
        <property name="text">
         <string>数量</string>
        </property>
@@ -127,30 +208,60 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="3">
-      <widget class="QDoubleSpinBox" name="doubleSpinBox_acceptance_sum"/>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="label_13">
+     <item row="1" column="4">
+      <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>结算金额</string>
+        <string>原始报价</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
-     <item row="2" column="5">
-      <widget class="QComboBox" name="comboBox_property_type"/>
+     <item row="1" column="6">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>报价币种</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_10">
        <property name="text">
-        <string>结算价格</string>
+        <string>请购价格</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>请购金额</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
      <item row="2" column="4">
-      <widget class="QLabel" name="label_9">
+      <widget class="QLabel" name="label_12">
        <property name="text">
-        <string>资产类型</string>
+        <string>结算价格</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="6">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>结算金额</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -160,14 +271,14 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="label_12">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>设备参数描述（用于固定资产设备卡）：</string>
+      <string>设备参数描述（固定资产卡片）</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="plainTextEdit_description"/>
+    <widget class="QPlainTextEdit" name="plainTextEdit"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -202,22 +313,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>lineEdit_name</tabstop>
-  <tabstop>lineEdit_model</tabstop>
-  <tabstop>lineEdit_manufacture</tabstop>
-  <tabstop>lineEdit_distributor</tabstop>
-  <tabstop>lineEdit_unit</tabstop>
-  <tabstop>doubleSpinBox_quantity</tabstop>
-  <tabstop>doubleSpinBox_budget_price</tabstop>
-  <tabstop>doubleSpinBox_budget_sum</tabstop>
-  <tabstop>doubleSpinBox_acceptance_price</tabstop>
-  <tabstop>doubleSpinBox_acceptance_sum</tabstop>
-  <tabstop>comboBox_property_type</tabstop>
-  <tabstop>plainTextEdit_description</tabstop>
-  <tabstop>pushButton_ok</tabstop>
-  <tabstop>pushButton_cancel</tabstop>
- </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -227,12 +322,12 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>628</x>
-     <y>336</y>
+     <x>645</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
-     <x>370</x>
-     <y>327</y>
+     <x>485</x>
+     <y>336</y>
     </hint>
    </hints>
   </connection>
@@ -243,12 +338,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>717</x>
-     <y>333</y>
+     <x>723</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel">
-     <x>542</x>
-     <y>335</y>
+     <x>726</x>
+     <y>359</y>
     </hint>
    </hints>
   </connection>

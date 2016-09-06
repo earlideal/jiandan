@@ -21,9 +21,9 @@ class InventoryWindow(QtGui.QWidget):
         self.model.setHorizontalHeaderLabels(headers)
         self.ui.treeView.setModel(self.model)
         self.model.itemChanged.connect(self.on_item_changed)
-        self.ui.treeView.setUniformRowHeights(True)
+        # self.ui.treeView.setUniformRowHeights(True)
         self.ui.treeView.setAlternatingRowColors(True)
-        self.ui.treeView.setAllColumnsShowFocus(True)
+        # self.ui.treeView.setAllColumnsShowFocus(True)
 
         self.ui.toolButton_append.clicked.connect(self._append_item)
         self.ui.toolButton_remove.clicked.connect(self._remove_item)
@@ -101,18 +101,16 @@ class EditorDialog(QtGui.QDialog):
         super(EditorDialog, self).__init__()
         self.ui = editor_template.Ui_Dialog()
         self.ui.setupUi(self)
-        self.calculate_amount_money()
-        self.ui.doubleSpinBox_budget_price.valueChanged.connect(self.calculate_amount_money)
-        self.ui.doubleSpinBox_quantity.valueChanged.connect(self.calculate_amount_money)
+        self.calculate_sum_money()
 
-    def calculate_amount_money(self):
+    def calculate_sum_money(self):
         quantity_value = self.ui.doubleSpinBox_quantity.value()
         self.quantity = '%s' % quantity_value
-        price_value = self.ui.doubleSpinBox_budget_price.value()
+        price_value = self.ui.doubleSpinBox_requisition_price.value()
         self.price = '%0.2f' % price_value
         sum_value = quantity_value * price_value
         self.sum_text = '%0.2f' % sum_value
-        self.ui.doubleSpinBox_budget_sum.setValue(sum_value)
+        self.ui.doubleSpinBox_requisition_sum.setValue(sum_value)
 
     def take_data(self):
         quantity = self.quantity

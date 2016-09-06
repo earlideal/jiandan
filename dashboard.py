@@ -26,7 +26,8 @@ class MainWindow(QtGui.QMainWindow):
 if __name__ == '__main__':
     app = QtGui.QApplication([])
     app.setFont(QtGui.QFont('trebuchet ms', 9))
-    app.setStyle("plastique")
+    # app.setStyle("plastique")
+    app.setStyle('windows')
     window = MainWindow()
     window.showMaximized()
     app.exec_()

@@ -16,19 +16,16 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(864, 112)
+        Form.resize(864, 104)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.gridLayout = QtGui.QGridLayout()
@@ -95,11 +92,16 @@ class Ui_Form(object):
         self.label_5.setObjectName(_fromUtf8("label_5"))
         self.gridLayout.addWidget(self.label_5, 1, 0, 1, 1)
         self.frame_standard = QtGui.QFrame(Form)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_standard.sizePolicy().hasHeightForWidth())
+        self.frame_standard.setSizePolicy(sizePolicy)
         self.frame_standard.setFrameShape(QtGui.QFrame.Panel)
         self.frame_standard.setFrameShadow(QtGui.QFrame.Sunken)
         self.frame_standard.setObjectName(_fromUtf8("frame_standard"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.frame_standard)
-        self.horizontalLayout_2.setContentsMargins(-1, 2, -1, 2)
+        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, 0)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.checkBox_14 = QtGui.QCheckBox(self.frame_standard)
         self.checkBox_14.setObjectName(_fromUtf8("checkBox_14"))
@@ -125,11 +127,16 @@ class Ui_Form(object):
         self.comboBox_quality_test.setObjectName(_fromUtf8("comboBox_quality_test"))
         self.gridLayout.addWidget(self.comboBox_quality_test, 2, 3, 1, 1)
         self.frame_documents = QtGui.QFrame(Form)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_documents.sizePolicy().hasHeightForWidth())
+        self.frame_documents.setSizePolicy(sizePolicy)
         self.frame_documents.setFrameShape(QtGui.QFrame.Panel)
         self.frame_documents.setFrameShadow(QtGui.QFrame.Sunken)
         self.frame_documents.setObjectName(_fromUtf8("frame_documents"))
         self.horizontalLayout = QtGui.QHBoxLayout(self.frame_documents)
-        self.horizontalLayout.setContentsMargins(-1, 2, -1, 2)
+        self.horizontalLayout.setContentsMargins(-1, 0, -1, 0)
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.checkBox_7 = QtGui.QCheckBox(self.frame_documents)
         self.checkBox_7.setObjectName(_fromUtf8("checkBox_7"))
