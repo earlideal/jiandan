@@ -60,6 +60,12 @@
        <property name="readOnly">
         <bool>true</bool>
        </property>
+       <property name="maximum">
+        <double>999999999.990000009536743</double>
+       </property>
+       <property name="value">
+        <double>1234.559999999999945</double>
+       </property>
       </widget>
      </item>
      <item row="2" column="5">
@@ -69,6 +75,12 @@
          <width>120</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="maximum">
+        <double>999999999.990000009536743</double>
+       </property>
+       <property name="value">
+        <double>1234.559999999999945</double>
        </property>
       </widget>
      </item>
@@ -80,10 +92,16 @@
          <height>0</height>
         </size>
        </property>
+       <property name="maximum">
+        <double>999999999.990000009536743</double>
+       </property>
+       <property name="value">
+        <double>1234.559999999999945</double>
+       </property>
       </widget>
      </item>
      <item row="1" column="7">
-      <widget class="QComboBox" name="comboBox_currency">
+      <widget class="QComboBox" name="comboBox_quotation_currency">
        <property name="minimumSize">
         <size>
          <width>120</width>
@@ -106,6 +124,12 @@
        <property name="readOnly">
         <bool>true</bool>
        </property>
+       <property name="maximum">
+        <double>999999999.990000009536743</double>
+       </property>
+       <property name="value">
+        <double>1234.559999999999945</double>
+       </property>
       </widget>
      </item>
      <item row="2" column="1">
@@ -115,6 +139,12 @@
          <width>120</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="maximum">
+        <double>999999999.990000009536743</double>
+       </property>
+       <property name="value">
+        <double>1234.559999999999945</double>
        </property>
       </widget>
      </item>
@@ -135,6 +165,12 @@
          <width>120</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="maximum">
+        <double>999999999.990000009536743</double>
+       </property>
+       <property name="value">
+        <double>1234.559999999999945</double>
        </property>
       </widget>
      </item>

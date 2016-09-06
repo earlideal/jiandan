@@ -17,19 +17,21 @@ class InventoryWindow(QtGui.QWidget):
         self.ui.setupUi(self)
 
         self.model = QtGui.QStandardItemModel()
-        headers = [u'产品名称', u'型号规格', u'单位', u'数量', u'经销商', u'预算单价', u'预算金额', u'结算单价', u'结算金额', u'资产类型', u'']
+        headers = [u'产品名称', u'型号规格', u'生产厂家', u'资产类型', u'单位', u'数量', u'原始报价',
+                   u'报价币种', u'请购价格', u'请购金额', u'结算价格', u'结算金额']
         self.model.setHorizontalHeaderLabels(headers)
-        self.ui.treeView.setModel(self.model)
+        self.ui.tableView.setModel(self.model)
         self.model.itemChanged.connect(self.on_item_changed)
         # self.ui.treeView.setUniformRowHeights(True)
-        self.ui.treeView.setAlternatingRowColors(True)
+        self.ui.tableView.setAlternatingRowColors(True)
         # self.ui.treeView.setAllColumnsShowFocus(True)
 
         self.ui.toolButton_append.clicked.connect(self._append_item)
         self.ui.toolButton_remove.clicked.connect(self._remove_item)
         self.ui.toolButton_export.clicked.connect(self._list_all_items)
         self.ui.toolButton_up.clicked.connect(partial(self._move_item, self.UP))
-        self.ui.toolButton_down.clicked.connect(partial(self._move_item, self.DOWN))
+        self.ui.toolButton_down.clicked.connect(
+            partial(self._move_item, self.DOWN))
 
         self.editor = EditorDialog()
 
@@ -38,7 +40,7 @@ class InventoryWindow(QtGui.QWidget):
         # self.editor.setWindowModality(QtCore.Qt.ApplicationModal)
         if self.editor.exec_():
             single_row = []
-            data = self.editor.take_data()
+            data = self.editor.get_editor_data()
             for var in ['name', 'model', 'unit', 'quantity', 'price', 'amount']:
                 single_row.append(QtGui.QStandardItem(data[var]))
                 single_row[0].setCheckable(True)
@@ -62,13 +64,14 @@ class InventoryWindow(QtGui.QWidget):
             return
 
         model = self.model
-        selection_model = self.ui.treeView.selectionModel()
+        selection_model = self.ui.tableView.selectionModel()
         selected_rows = selection_model.selectedRows()
         if not selected_rows:
             return
 
         items = []
-        indexes = sorted(selected_rows, key=lambda x: x.row(), reverse=(direction == self.DOWN))
+        indexes = sorted(selected_rows, key=lambda x: x.row(),
+                         reverse=(direction == self.DOWN))
 
         for index in indexes:
             item = model.itemFromIndex(index)
@@ -101,32 +104,6 @@ class EditorDialog(QtGui.QDialog):
         super(EditorDialog, self).__init__()
         self.ui = editor_template.Ui_Dialog()
         self.ui.setupUi(self)
-        self.calculate_sum_money()
 
-    def calculate_sum_money(self):
-        quantity_value = self.ui.doubleSpinBox_quantity.value()
-        self.quantity = '%s' % quantity_value
-        price_value = self.ui.doubleSpinBox_requisition_price.value()
-        self.price = '%0.2f' % price_value
-        sum_value = quantity_value * price_value
-        self.sum_text = '%0.2f' % sum_value
-        self.ui.doubleSpinBox_requisition_sum.setValue(sum_value)
-
-    def take_data(self):
-        quantity = self.quantity
-        price = self.price
-        amount = self.sum_text
-
-        name = self.ui.lineEdit_name.text()
-        model = self.ui.lineEdit_model.text()
-        unit = self.ui.lineEdit_unit.text()
-
-        manufacture = self.ui.lineEdit_manufacture.text()
-        distributor = self.ui.lineEdit_distributor.text()
-        description = self.ui.plainTextEdit_description.toPlainText()
-
-        data = {}
-        for varible in ['name', 'model', 'unit', 'quantity', 'price', 'amount', 'manufacture', 'distributor',
-                        'description']:
-            data[varible] = unicode(eval(varible))
-        return data
+    def get_editor_data(self):
+        pass
