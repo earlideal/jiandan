@@ -85,6 +85,8 @@ class Ui_Dialog(object):
         self.comboBox_property_type = QtGui.QComboBox(Dialog)
         self.comboBox_property_type.setMinimumSize(QtCore.QSize(120, 0))
         self.comboBox_property_type.setObjectName(_fromUtf8("comboBox_property_type"))
+        self.comboBox_property_type.addItem(_fromUtf8(""))
+        self.comboBox_property_type.addItem(_fromUtf8(""))
         self.gridLayout.addWidget(self.comboBox_property_type, 0, 7, 1, 1)
         self.doubleSpinBox_quantity = QtGui.QDoubleSpinBox(Dialog)
         self.doubleSpinBox_quantity.setMinimumSize(QtCore.QSize(120, 0))
@@ -170,8 +172,14 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
+        self.lineEdit_name.setText(_translate("Dialog", "针式打印机", None))
+        self.lineEdit_model.setText(_translate("Dialog", "LQ-80KF", None))
+        self.lineEdit_manufacture.setText(_translate("Dialog", "爱普生中国有限公司", None))
         self.comboBox_quotation_currency.setItemText(0, _translate("Dialog", "美元", None))
         self.comboBox_quotation_currency.setItemText(1, _translate("Dialog", "英镑", None))
+        self.comboBox_property_type.setItemText(0, _translate("Dialog", "固定资产", None))
+        self.comboBox_property_type.setItemText(1, _translate("Dialog", "材料消耗品", None))
+        self.lineEdit_unit.setText(_translate("Dialog", "台", None))
         self.label_2.setText(_translate("Dialog", "产品名称", None))
         self.label_3.setText(_translate("Dialog", "型号规格", None))
         self.label_4.setText(_translate("Dialog", "生产厂家", None))

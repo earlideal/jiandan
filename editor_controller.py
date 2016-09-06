@@ -13,7 +13,9 @@ class EditorDialog(QtGui.QDialog):
         super(EditorDialog, self).__init__()
         self.ui = editor_template.Ui_Dialog()
         self.ui.setupUi(self)
-        self._update_model_from_view()
+
+    def get_data(self):
+        return self._update_model_from_view()
 
     def _update_model_from_view(self):
         self.name = unicode(self.ui.lineEdit_name.text())
@@ -29,16 +31,17 @@ class EditorDialog(QtGui.QDialog):
         self.acceptance_price = self.ui.doubleSpinBox_acceptance_price.value()
         self.acceptance_sum = self.ui.doubleSpinBox_acceptance_sum.value()
         self.description = unicode(self.ui.plainTextEdit.toPlainText())
-        self.items = copy.deepcopy(self.__dict__)
-        self.items.pop("ui")
+        items = copy.deepcopy(self.__dict__)
+        items.pop('ui')
 
-        keys = self.items.keys()
+        keys = items.keys()
         inventory = InventoryRowModel()
         for key in keys:
             if hasattr(inventory, key):
-                setattr(inventory, key, self.items[key])
+                setattr(inventory, key, items[key])
             else:
                 print u'未发现键值：', key
+        return items
 
 
 if __name__ == '__main__':

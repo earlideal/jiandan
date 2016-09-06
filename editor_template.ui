@@ -24,6 +24,9 @@
          <height>0</height>
         </size>
        </property>
+       <property name="text">
+        <string>针式打印机</string>
+       </property>
       </widget>
      </item>
      <item row="0" column="3">
@@ -34,6 +37,9 @@
          <height>0</height>
         </size>
        </property>
+       <property name="text">
+        <string>LQ-80KF</string>
+       </property>
       </widget>
      </item>
      <item row="0" column="5">
@@ -43,6 +49,9 @@
          <width>120</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="text">
+        <string>爱普生中国有限公司</string>
        </property>
       </widget>
      </item>
@@ -166,6 +175,16 @@
          <height>0</height>
         </size>
        </property>
+       <item>
+        <property name="text">
+         <string>固定资产</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>材料消耗品</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="1" column="3">
@@ -191,6 +210,9 @@
          <width>120</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="text">
+        <string>台</string>
        </property>
       </widget>
      </item>

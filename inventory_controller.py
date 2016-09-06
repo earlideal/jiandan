@@ -35,7 +35,7 @@ class InventoryWindow(QtGui.QWidget):
         # if editor is a QWidget, use the following code to set window modal state
         # self.editor.setWindowModality(QtCore.Qt.ApplicationModal)
         if self.editor.exec_():
-            data = self.editor.items
+            data = self.editor.get_data()
             row = []
             keys = ['name', 'model', 'manufacture', 'property_type', 'unit', 'quantity', 'quotation_price',
                     'quotation_currency', 'requisition_price', 'requisition_sum', 'acceptance_price', 'acceptance_sum']
@@ -46,9 +46,13 @@ class InventoryWindow(QtGui.QWidget):
                 row.append(QtGui.QStandardItem(x))
 
                 # 设置首列为可选择
-                # row[0].setCheckable(True)
+                row[0].setCheckable(True)
 
             self.model.appendRow(row)
+
+            # 让表格的列宽自适应内容变化
+            # self.ui.tableView.resizeColumnsToContents()
+
             # 获取表格中某一格内容的方法
             print self.model.item(0, 6).text()
 
