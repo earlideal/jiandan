@@ -49,6 +49,8 @@ class InventoryWindow(QtGui.QWidget):
                 # row[0].setCheckable(True)
 
             self.model.appendRow(row)
+            # 获取表格中某一格内容的方法
+            print self.model.item(0, 6).text()
 
     def _remove_item(self):
         items = []
