@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>767</width>
-    <height>468</height>
+    <width>443</width>
+    <height>276</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10,1">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -139,6 +139,69 @@
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QTableView" name="tableView"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>请购总计：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_requisition_total">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>结算总计：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDoubleSpinBox" name="doubleSpinBox_acceptance_total">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

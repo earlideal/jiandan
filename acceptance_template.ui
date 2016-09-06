@@ -175,7 +175,7 @@
         </sizepolicy>
        </property>
        <property name="frameShape">
-        <enum>QFrame::Panel</enum>
+        <enum>QFrame::Box</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
@@ -259,7 +259,7 @@
         </sizepolicy>
        </property>
        <property name="frameShape">
-        <enum>QFrame::Panel</enum>
+        <enum>QFrame::Box</enum>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
