@@ -65,6 +65,8 @@ class Ui_Dialog(object):
         self.comboBox_quotation_currency = QtGui.QComboBox(Dialog)
         self.comboBox_quotation_currency.setMinimumSize(QtCore.QSize(120, 0))
         self.comboBox_quotation_currency.setObjectName(_fromUtf8("comboBox_quotation_currency"))
+        self.comboBox_quotation_currency.addItem(_fromUtf8(""))
+        self.comboBox_quotation_currency.addItem(_fromUtf8(""))
         self.gridLayout.addWidget(self.comboBox_quotation_currency, 1, 7, 1, 1)
         self.doubleSpinBox_acceptance_sum = QtGui.QDoubleSpinBox(Dialog)
         self.doubleSpinBox_acceptance_sum.setEnabled(False)
@@ -168,6 +170,8 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog", None))
+        self.comboBox_quotation_currency.setItemText(0, _translate("Dialog", "美元", None))
+        self.comboBox_quotation_currency.setItemText(1, _translate("Dialog", "英镑", None))
         self.label_2.setText(_translate("Dialog", "产品名称", None))
         self.label_3.setText(_translate("Dialog", "型号规格", None))
         self.label_4.setText(_translate("Dialog", "生产厂家", None))

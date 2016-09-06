@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import copy
+
 from PyQt4 import QtGui
 
 import editor_template
+from model import InventoryRowModel
 
 
 class EditorDialog(QtGui.QDialog):
@@ -25,7 +28,17 @@ class EditorDialog(QtGui.QDialog):
         self.requisition_sum = self.ui.doubleSpinBox_requisition_sum.value()
         self.acceptance_price = self.ui.doubleSpinBox_acceptance_price.value()
         self.acceptance_sum = self.ui.doubleSpinBox_acceptance_sum.value()
-        print self.__dict__
+        self.description = unicode(self.ui.plainTextEdit.toPlainText())
+        self.items = copy.deepcopy(self.__dict__)
+        self.items.pop("ui")
+
+        keys = self.items.keys()
+        inventory = InventoryRowModel()
+        for key in keys:
+            if hasattr(inventory, key):
+                setattr(inventory, key, self.items[key])
+            else:
+                print u'未发现键值：', key
 
 
 if __name__ == '__main__':

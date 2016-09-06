@@ -85,7 +85,7 @@ class Contract(Model):
     company = relationship(Company)
 
 
-class InventoryEditorModel(Model):
+class InventoryRowModel(Model):
     __tablename__ = "inventories"
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -100,6 +100,7 @@ class InventoryEditorModel(Model):
     requisition_sum = Column(Float)
     acceptance_price = Column(Float)
     acceptance_sum = Column(Float)
+    description = Column(String)
 
 
 Model.metadata.create_all(engine)

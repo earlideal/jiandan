@@ -108,6 +108,16 @@
          <height>0</height>
         </size>
        </property>
+       <item>
+        <property name="text">
+         <string>美元</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>英镑</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="2" column="7">

@@ -3,8 +3,8 @@ from functools import partial
 
 from PyQt4 import QtGui
 
-import editor_template
 import inventory_template
+from editor_controller import EditorDialog
 
 
 class InventoryWindow(QtGui.QWidget):
@@ -21,17 +21,13 @@ class InventoryWindow(QtGui.QWidget):
                    u'报价币种', u'请购价格', u'请购金额', u'结算价格', u'结算金额']
         self.model.setHorizontalHeaderLabels(headers)
         self.ui.tableView.setModel(self.model)
-        self.model.itemChanged.connect(self.on_item_changed)
-        # self.ui.treeView.setUniformRowHeights(True)
         self.ui.tableView.setAlternatingRowColors(True)
-        # self.ui.treeView.setAllColumnsShowFocus(True)
 
         self.ui.toolButton_append.clicked.connect(self._append_item)
         self.ui.toolButton_remove.clicked.connect(self._remove_item)
         self.ui.toolButton_export.clicked.connect(self._list_all_items)
         self.ui.toolButton_up.clicked.connect(partial(self._move_item, self.UP))
-        self.ui.toolButton_down.clicked.connect(
-            partial(self._move_item, self.DOWN))
+        self.ui.toolButton_down.clicked.connect(partial(self._move_item, self.DOWN))
 
         self.editor = EditorDialog()
 
@@ -39,13 +35,20 @@ class InventoryWindow(QtGui.QWidget):
         # if editor is a QWidget, use the following code to set window modal state
         # self.editor.setWindowModality(QtCore.Qt.ApplicationModal)
         if self.editor.exec_():
-            single_row = []
-            data = self.editor.get_editor_data()
-            for var in ['name', 'model', 'unit', 'quantity', 'price', 'amount']:
-                single_row.append(QtGui.QStandardItem(data[var]))
-                single_row[0].setCheckable(True)
+            data = self.editor.items
+            row = []
+            keys = ['name', 'model', 'manufacture', 'property_type', 'unit', 'quantity', 'quotation_price',
+                    'quotation_currency', 'requisition_price', 'requisition_sum', 'acceptance_price', 'acceptance_sum']
+            for k in keys:
+                x = data[k]
+                if not isinstance(x, unicode):
+                    x = "%.2f" % x
+                row.append(QtGui.QStandardItem(x))
 
-            self.model.appendRow(single_row)
+                # 设置首列为可选择
+                # row[0].setCheckable(True)
+
+            self.model.appendRow(row)
 
     def _remove_item(self):
         items = []
@@ -88,22 +91,8 @@ class InventoryWindow(QtGui.QWidget):
         for item in items:
             selection_model.select(item.index(), selection_model.Select | selection_model.Rows)
 
-    def on_item_changed(self, item):
-        pass
-
     def _list_all_items(self):
         for i in xrange(self.model.rowCount()):
             for j in xrange(self.model.columnCount()):
                 index = self.model.index(i, j)
                 print unicode(self.model.itemFromIndex(index).text())
-
-
-class EditorDialog(QtGui.QDialog):
-    def __init__(self):
-        # 注意：已经在设计窗体时将按钮信号和对话框的槽链接到一起了
-        super(EditorDialog, self).__init__()
-        self.ui = editor_template.Ui_Dialog()
-        self.ui.setupUi(self)
-
-    def get_editor_data(self):
-        pass
