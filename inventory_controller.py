@@ -25,7 +25,6 @@ class InventoryWindow(QtGui.QWidget):
 
         self.ui.toolButton_append.clicked.connect(self._append_item)
         self.ui.toolButton_remove.clicked.connect(self._remove_item)
-        self.ui.toolButton_export.clicked.connect(self._list_all_items)
         self.ui.toolButton_up.clicked.connect(partial(self._move_item, self.UP))
         self.ui.toolButton_down.clicked.connect(partial(self._move_item, self.DOWN))
 
@@ -97,8 +96,3 @@ class InventoryWindow(QtGui.QWidget):
         for item in items:
             selection_model.select(item.index(), selection_model.Select | selection_model.Rows)
 
-    def _list_all_items(self):
-        for i in xrange(self.model.rowCount()):
-            for j in xrange(self.model.columnCount()):
-                index = self.model.index(i, j)
-                print unicode(self.model.itemFromIndex(index).text())
