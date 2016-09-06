@@ -19,6 +19,8 @@ class InventoryWindow(QtGui.QWidget):
         self.table_model = QtGui.QStandardItemModel()
         headers = [u'产品名称', u'型号规格', u'生产厂家', u'资产类型', u'单位', u'数量', u'原始报价',
                    u'报价币种', u'请购价格', u'请购金额', u'结算价格', u'结算金额']
+        self.keys = ['name', 'model', 'manufacture', 'property_type', 'unit', 'quantity', 'quotation_price',
+                     'quotation_currency', 'requisition_price', 'requisition_sum', 'acceptance_price', 'acceptance_sum']
         self.table_model.setHorizontalHeaderLabels(headers)
         self.ui.tableView.setModel(self.table_model)
         self.ui.tableView.setAlternatingRowColors(True)
@@ -29,6 +31,7 @@ class InventoryWindow(QtGui.QWidget):
         self.ui.toolButton_down.clicked.connect(partial(self._move_item, self.DOWN))
 
         self.ui.doubleSpinBox_acceptance_total.valueChanged.connect(self._recaculate_acceptance_price)
+        self.ui.doubleSpinBox_requisition_total.valueChanged.connect(self._recaculate_requisition_price)
 
         self.inventories = []
 
@@ -41,9 +44,8 @@ class InventoryWindow(QtGui.QWidget):
             data = self.editor.get_data()
             self.inventories.append(data)
             row = []
-            keys = ['name', 'model', 'manufacture', 'property_type', 'unit', 'quantity', 'quotation_price',
-                    'quotation_currency', 'requisition_price', 'requisition_sum', 'acceptance_price', 'acceptance_sum']
-            for k in keys:
+
+            for k in self.keys:
                 x = data[k]
                 if not isinstance(x, unicode):
                     x = "%.2f" % x
@@ -98,9 +100,31 @@ class InventoryWindow(QtGui.QWidget):
             selection_model.select(item.index(), selection_model.Select | selection_model.Rows)
 
     def _recaculate_requisition_price(self):
-        pass
+        total = self.ui.doubleSpinBox_requisition_total.value()
+
+        row_number = len(self.inventories)
+        sum = 0
+        sum_list = []
+
+        sum_ratio_list = []
+        recaculated_sum_list = []
+        for data_dict in self.inventories:
+            quantity = data_dict['quantity']
+            quotation_price = data_dict['quotation_price']
+            quotation_sum = quantity * quotation_price
+            sum_list.append(quotation_sum)
+            sum += quotation_sum
+
+        for s in sum_list:
+            ratio = s / sum
+            sum_ratio_list.append(ratio)  # 注意这个地方的除法是否会只是取整
+            recaculated_sum_list.append(ratio * total)
+        column_index = self.keys.index('requisition_price')
+        for i in xrange(len(self.inventories)):
+            self.inventories[i]['requisition_sum'] = recaculated_sum_list[i]
+            self.inventories[i]['requisition_price'] = recaculated_sum_list[i] / self.inventories[i]['quantity']
+            self.table_model.item(i, column_index).setText(str(self.inventories[i]['requisition_price']))
+            # TODO 需要建立通过model更新界面的模型
 
     def _recaculate_acceptance_price(self):
-        for data_dict in self.inventories:
-            for k in data_dict:
-                print data_dict[k]
+        pass
