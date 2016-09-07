@@ -16,14 +16,11 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
-
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -49,20 +46,20 @@ class Ui_Dialog(object):
         self.doubleSpinBox_requisition_sum.setEnabled(False)
         self.doubleSpinBox_requisition_sum.setMinimumSize(QtCore.QSize(120, 0))
         self.doubleSpinBox_requisition_sum.setReadOnly(True)
+        self.doubleSpinBox_requisition_sum.setDecimals(4)
         self.doubleSpinBox_requisition_sum.setMaximum(999999999.99)
-        self.doubleSpinBox_requisition_sum.setProperty("value", 1234.56)
         self.doubleSpinBox_requisition_sum.setObjectName(_fromUtf8("doubleSpinBox_requisition_sum"))
         self.gridLayout.addWidget(self.doubleSpinBox_requisition_sum, 2, 3, 1, 1)
         self.doubleSpinBox_acceptance_price = QtGui.QDoubleSpinBox(Dialog)
         self.doubleSpinBox_acceptance_price.setMinimumSize(QtCore.QSize(120, 0))
+        self.doubleSpinBox_acceptance_price.setDecimals(4)
         self.doubleSpinBox_acceptance_price.setMaximum(999999999.99)
-        self.doubleSpinBox_acceptance_price.setProperty("value", 10.0)
         self.doubleSpinBox_acceptance_price.setObjectName(_fromUtf8("doubleSpinBox_acceptance_price"))
         self.gridLayout.addWidget(self.doubleSpinBox_acceptance_price, 2, 5, 1, 1)
         self.doubleSpinBox_quotation_price = QtGui.QDoubleSpinBox(Dialog)
         self.doubleSpinBox_quotation_price.setMinimumSize(QtCore.QSize(120, 0))
+        self.doubleSpinBox_quotation_price.setDecimals(4)
         self.doubleSpinBox_quotation_price.setMaximum(999999999.99)
-        self.doubleSpinBox_quotation_price.setProperty("value", 10.0)
         self.doubleSpinBox_quotation_price.setObjectName(_fromUtf8("doubleSpinBox_quotation_price"))
         self.gridLayout.addWidget(self.doubleSpinBox_quotation_price, 1, 5, 1, 1)
         self.comboBox_quotation_currency = QtGui.QComboBox(Dialog)
@@ -75,14 +72,14 @@ class Ui_Dialog(object):
         self.doubleSpinBox_acceptance_sum.setEnabled(False)
         self.doubleSpinBox_acceptance_sum.setMinimumSize(QtCore.QSize(120, 0))
         self.doubleSpinBox_acceptance_sum.setReadOnly(True)
+        self.doubleSpinBox_acceptance_sum.setDecimals(4)
         self.doubleSpinBox_acceptance_sum.setMaximum(999999999.99)
-        self.doubleSpinBox_acceptance_sum.setProperty("value", 1234.56)
         self.doubleSpinBox_acceptance_sum.setObjectName(_fromUtf8("doubleSpinBox_acceptance_sum"))
         self.gridLayout.addWidget(self.doubleSpinBox_acceptance_sum, 2, 7, 1, 1)
         self.doubleSpinBox_requisition_price = QtGui.QDoubleSpinBox(Dialog)
         self.doubleSpinBox_requisition_price.setMinimumSize(QtCore.QSize(120, 0))
+        self.doubleSpinBox_requisition_price.setDecimals(4)
         self.doubleSpinBox_requisition_price.setMaximum(999999999.99)
-        self.doubleSpinBox_requisition_price.setProperty("value", 10.0)
         self.doubleSpinBox_requisition_price.setObjectName(_fromUtf8("doubleSpinBox_requisition_price"))
         self.gridLayout.addWidget(self.doubleSpinBox_requisition_price, 2, 1, 1, 1)
         self.comboBox_property_type = QtGui.QComboBox(Dialog)
@@ -93,8 +90,8 @@ class Ui_Dialog(object):
         self.gridLayout.addWidget(self.comboBox_property_type, 0, 7, 1, 1)
         self.doubleSpinBox_quantity = QtGui.QDoubleSpinBox(Dialog)
         self.doubleSpinBox_quantity.setMinimumSize(QtCore.QSize(120, 0))
+        self.doubleSpinBox_quantity.setDecimals(4)
         self.doubleSpinBox_quantity.setMaximum(999999999.99)
-        self.doubleSpinBox_quantity.setProperty("value", 2.0)
         self.doubleSpinBox_quantity.setObjectName(_fromUtf8("doubleSpinBox_quantity"))
         self.gridLayout.addWidget(self.doubleSpinBox_quantity, 1, 3, 1, 1)
         self.lineEdit_unit = QtGui.QLineEdit(Dialog)
@@ -171,6 +168,10 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.pushButton_ok, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.accept)
         QtCore.QObject.connect(self.pushButton_cancel, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), Dialog.reject)
+        QtCore.QObject.connect(self.doubleSpinBox_quotation_price, QtCore.SIGNAL(_fromUtf8("valueChanged(double)")),
+                               self.doubleSpinBox_requisition_price.setValue)
+        QtCore.QObject.connect(self.doubleSpinBox_requisition_price, QtCore.SIGNAL(_fromUtf8("valueChanged(double)")),
+                               self.doubleSpinBox_acceptance_price.setValue)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

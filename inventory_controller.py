@@ -41,6 +41,7 @@ class InventoryWindow(QtGui.QWidget):
     def _append_item(self):
         # if editor is a QWidget, use the following code to set window modal state
         # self.editor.setWindowModality(QtCore.Qt.ApplicationModal)
+        self.editor = EditorDialog()
         if self.editor.exec_():
             data = self.editor.get_data()
             self.inventories.append(data)
@@ -101,6 +102,8 @@ class InventoryWindow(QtGui.QWidget):
             selection_model.select(item.index(), selection_model.Select | selection_model.Rows)
 
     def _recaculate_money(self, req):
+        if len(self.inventories) == 0:
+            return
         if req:
             total = self.ui.doubleSpinBox_requisition_total.value()
             price_str = 'requisition_price'
@@ -131,6 +134,6 @@ class InventoryWindow(QtGui.QWidget):
         for i in xrange(len(self.inventories)):
             self.inventories[i][sum_str] = recaculated_sum_list[i]
             self.inventories[i][price_str] = recaculated_sum_list[i] / self.inventories[i]['quantity']
-            self.table_model.item(i, ind).setText('%.2f' % (self.inventories[i][price_str]))
-            self.table_model.item(i, ind + 1).setText('%.2f' % (self.inventories[i][sum_str]))
+            self.table_model.item(i, ind).setText('%.4f' % (self.inventories[i][price_str]))
+            self.table_model.item(i, ind + 1).setText('%.4f' % (self.inventories[i][sum_str]))
             # TODO 需要建立通过model更新界面的模型

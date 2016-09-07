@@ -16,19 +16,16 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(756, 421)
+        Form.resize(443, 276)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setContentsMargins(0, -1, 0, -1)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
@@ -76,10 +73,10 @@ class Ui_Form(object):
         self.tableView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
         self.tableView.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
         self.tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tableView.setWordWrap(False)
         self.tableView.setObjectName(_fromUtf8("tableView"))
-        self.tableView.horizontalHeader().setCascadingSectionResizes(True)
         self.tableView.horizontalHeader().setMinimumSectionSize(100)
-        self.tableView.horizontalHeader().setSortIndicatorShown(True)
+        self.tableView.verticalHeader().setMinimumSectionSize(15)
         self.horizontalLayout_2.addWidget(self.tableView)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()

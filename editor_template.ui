@@ -69,11 +69,11 @@
        <property name="readOnly">
         <bool>true</bool>
        </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
        <property name="maximum">
         <double>999999999.990000009536743</double>
-       </property>
-       <property name="value">
-        <double>1234.559999999999945</double>
        </property>
       </widget>
      </item>
@@ -85,11 +85,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
        <property name="maximum">
         <double>999999999.990000009536743</double>
-       </property>
-       <property name="value">
-        <double>10.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -101,11 +101,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
        <property name="maximum">
         <double>999999999.990000009536743</double>
-       </property>
-       <property name="value">
-        <double>10.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -143,11 +143,11 @@
        <property name="readOnly">
         <bool>true</bool>
        </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
        <property name="maximum">
         <double>999999999.990000009536743</double>
-       </property>
-       <property name="value">
-        <double>1234.559999999999945</double>
        </property>
       </widget>
      </item>
@@ -159,11 +159,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
        <property name="maximum">
         <double>999999999.990000009536743</double>
-       </property>
-       <property name="value">
-        <double>10.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -195,11 +195,11 @@
          <height>0</height>
         </size>
        </property>
+       <property name="decimals">
+        <number>4</number>
+       </property>
        <property name="maximum">
         <double>999999999.990000009536743</double>
-       </property>
-       <property name="value">
-        <double>2.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -412,6 +412,38 @@
     <hint type="destinationlabel">
      <x>726</x>
      <y>359</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_quotation_price</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>doubleSpinBox_requisition_price</receiver>
+   <slot>setValue(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>468</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>158</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>doubleSpinBox_requisition_price</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>doubleSpinBox_acceptance_price</receiver>
+   <slot>setValue(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>136</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>467</x>
+     <y>80</y>
     </hint>
    </hints>
   </connection>
