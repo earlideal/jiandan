@@ -22,6 +22,7 @@ class InventoryWindow(QtGui.QWidget):
         self.keys = ['name', 'model', 'manufacture', 'property_type', 'unit', 'quantity', 'quotation_price',
                      'quotation_currency', 'requisition_price', 'requisition_sum', 'acceptance_price', 'acceptance_sum']
         self.table_model.setHorizontalHeaderLabels(headers)
+
         self.ui.tableView.setModel(self.table_model)
         self.ui.tableView.setAlternatingRowColors(True)
 
@@ -30,8 +31,8 @@ class InventoryWindow(QtGui.QWidget):
         self.ui.toolButton_up.clicked.connect(partial(self._move_item, self.UP))
         self.ui.toolButton_down.clicked.connect(partial(self._move_item, self.DOWN))
 
-        self.ui.doubleSpinBox_acceptance_total.valueChanged.connect(self._recaculate_acceptance_price)
-        self.ui.doubleSpinBox_requisition_total.valueChanged.connect(self._recaculate_requisition_price)
+        self.ui.doubleSpinBox_acceptance_total.editingFinished.connect(partial(self._recaculate_money, 0))
+        self.ui.doubleSpinBox_requisition_total.editingFinished.connect(partial(self._recaculate_money, 1))
 
         self.inventories = []
 
@@ -99,13 +100,18 @@ class InventoryWindow(QtGui.QWidget):
         for item in items:
             selection_model.select(item.index(), selection_model.Select | selection_model.Rows)
 
-    def _recaculate_requisition_price(self):
-        total = self.ui.doubleSpinBox_requisition_total.value()
-
+    def _recaculate_money(self, req):
+        if req:
+            total = self.ui.doubleSpinBox_requisition_total.value()
+            price_str = 'requisition_price'
+            sum_str = 'requisition_sum'
+        else:
+            total = self.ui.doubleSpinBox_acceptance_total.value()
+            price_str = 'acceptance_price'
+            sum_str = 'acceptance_sum'
         row_number = len(self.inventories)
         sum = 0
         sum_list = []
-
         sum_ratio_list = []
         recaculated_sum_list = []
         for data_dict in self.inventories:
@@ -119,12 +125,12 @@ class InventoryWindow(QtGui.QWidget):
             ratio = s / sum
             sum_ratio_list.append(ratio)  # 注意这个地方的除法是否会只是取整
             recaculated_sum_list.append(ratio * total)
-        column_index = self.keys.index('requisition_price')
-        for i in xrange(len(self.inventories)):
-            self.inventories[i]['requisition_sum'] = recaculated_sum_list[i]
-            self.inventories[i]['requisition_price'] = recaculated_sum_list[i] / self.inventories[i]['quantity']
-            self.table_model.item(i, column_index).setText(str(self.inventories[i]['requisition_price']))
-            # TODO 需要建立通过model更新界面的模型
 
-    def _recaculate_acceptance_price(self):
-        pass
+        # 更新tableView的数据模型相关位置的数据
+        ind = self.keys.index(price_str)
+        for i in xrange(len(self.inventories)):
+            self.inventories[i][sum_str] = recaculated_sum_list[i]
+            self.inventories[i][price_str] = recaculated_sum_list[i] / self.inventories[i]['quantity']
+            self.table_model.item(i, ind).setText('%.2f' % (self.inventories[i][price_str]))
+            self.table_model.item(i, ind + 1).setText('%.2f' % (self.inventories[i][sum_str]))
+            # TODO 需要建立通过model更新界面的模型

@@ -13,6 +13,16 @@ class EditorDialog(QtGui.QDialog):
         super(EditorDialog, self).__init__()
         self.ui = editor_template.Ui_Dialog()
         self.ui.setupUi(self)
+        self.ui.doubleSpinBox_quantity.valueChanged.connect(self._caculate_sum_money)
+        self.ui.doubleSpinBox_acceptance_price.valueChanged.connect(self._caculate_sum_money)
+        self.ui.doubleSpinBox_requisition_price.valueChanged.connect(self._caculate_sum_money)
+
+    def _caculate_sum_money(self):
+        quantity = self.ui.doubleSpinBox_quantity.value()
+        price_req = self.ui.doubleSpinBox_requisition_price.value()
+        self.ui.doubleSpinBox_requisition_sum.setValue(quantity * price_req)
+        price_acc = self.ui.doubleSpinBox_acceptance_price.value()
+        self.ui.doubleSpinBox_acceptance_sum.setValue(quantity * price_acc)
 
     def get_data(self):
         return self._update_model_from_view()
