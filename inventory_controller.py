@@ -54,7 +54,7 @@ class InventoryWindow(QtGui.QWidget):
                 row.append(QtGui.QStandardItem(x))
 
                 # 设置首列为可选择
-                row[0].setCheckable(True)
+                # row[0].setCheckable(True)
 
             self.table_model.appendRow(row)
 
