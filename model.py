@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import datetime
 import os
 
 from sqlalchemy import *
@@ -103,6 +104,16 @@ class InventoryRowModel(Model):
     description = Column(String)
 
 
+class Transaction(Model):
+    __tablename__ = "transactions"
+    id = Column(Integer, primary_key=True)
+    swift_code = Column(String, default=datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    requisition_id = Column(Integer, ForeignKey(Requisition.id))
+    requisition = relationship(Requisition)
+    contract_id = Column(Integer, ForeignKey(Contract.id))
+    contract = relationship(Contract)
+
+
 Model.metadata.create_all(engine)
 Session = sessionmaker()
 Session.configure(bind=engine)
@@ -156,6 +167,11 @@ def preinstall_db():
     session.add(changhe)
     session.add(kehua)
     session.add(contract)
+    session.commit()
+
+    ####################################################################################################################
+    transaction = Transaction(requisition=req, contract=contract)
+    session.add(transaction)
     session.commit()
 
 
