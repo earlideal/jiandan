@@ -12,9 +12,10 @@ print path
 doc = word.Documents.Open(path)
 try:
     cell = doc.Tables(1).Cell(Row=1, Column=2)
-    print cell.Range.Text.decode('utf-8').encode('gbk')
+    t = cell.Range.Text
+    print t
 except:
-    print "error!"
+    print u"解析word内容发生错误。"
 word.ActiveDocument.Save()
 # word.ActiveDocument.PrintOut()
 word.ActiveDocument.Close()
