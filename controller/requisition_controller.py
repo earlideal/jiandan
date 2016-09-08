@@ -3,8 +3,8 @@
 from PyQt4 import QtGui, QtCore
 
 import model
-import requisition_template
 from model import session
+from view_templates import requisition_template
 
 
 class RequisitionWindow(QtGui.QWidget):

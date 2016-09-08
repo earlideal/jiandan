@@ -4,8 +4,8 @@ import copy
 
 from PyQt4 import QtGui
 
-import editor_template
 from model import InventoryRowModel
+from view_templates import editor_template
 
 
 class EditorDialog(QtGui.QDialog):

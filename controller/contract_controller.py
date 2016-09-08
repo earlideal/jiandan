@@ -2,9 +2,9 @@
 
 from PyQt4 import QtGui, QtCore
 
-import contract_template
 import model
 from model import session
+from view_templates import contract_template
 
 
 class ContractWindow(QtGui.QWidget):

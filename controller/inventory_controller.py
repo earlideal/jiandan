@@ -3,8 +3,8 @@ from functools import partial
 
 from PyQt4 import QtGui
 
-import inventory_template
 from editor_controller import EditorDialog
+from view_templates import inventory_template
 
 
 class InventoryWindow(QtGui.QWidget):

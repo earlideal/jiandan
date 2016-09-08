@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 
-import acceptance_template
+from view_templates import acceptance_template
 
 
 class AcceptanceWindow(QtGui.QWidget):

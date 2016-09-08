@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 
-from dashboard_controller import DashboardWindow
+from controller.dashboard_controller import DashboardWindow
 
 if __name__ == '__main__':
     app = QtGui.QApplication([])

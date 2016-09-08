@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 
-import dashboard_template
+from view_templates import dashboard_template
 
 
 class DashboardWindow(QtGui.QMainWindow):
@@ -8,8 +8,6 @@ class DashboardWindow(QtGui.QMainWindow):
         super(DashboardWindow, self).__init__()
         self.ui = dashboard_template.Ui_MainWindow()
         self.ui.setupUi(self)
-
-
 
 
 if __name__ == '__main__':
