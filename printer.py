@@ -2,7 +2,7 @@
 
 from PyQt4 import QtGui
 
-from view_templates import printer_template
+from views import printer_template
 
 
 class PrinterWindow(QtGui.QWidget):

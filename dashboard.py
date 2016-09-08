@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 
-from view_templates import dashboard_template
+from views import dashboard_template
 
 
 class DashboardWindow(QtGui.QMainWindow):

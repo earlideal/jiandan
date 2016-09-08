@@ -1,11 +1,11 @@
 from PyQt4 import QtGui
 
-from acceptance_controller import AcceptanceWindow
-from contract_controller import ContractWindow
-from inventory_controller import InventoryWindow
-from printer_controller import PrinterWindow
-from requisition_controller import RequisitionWindow
-from view_templates import dashboard_template
+from acceptance import AcceptanceWindow
+from contract import ContractWindow
+from inventory import InventoryWindow
+from printer import PrinterWindow
+from requisition import RequisitionWindow
+from views import dashboard_template
 
 
 class TransactionWindow(QtGui.QWidget):
