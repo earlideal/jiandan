@@ -20,7 +20,7 @@
       <item>
        <widget class="QToolButton" name="toolButton_4">
         <property name="text">
-         <string>桌面</string>
+         <string>返回桌面</string>
         </property>
        </widget>
       </item>
