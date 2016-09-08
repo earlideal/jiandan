@@ -12,3 +12,6 @@ class DashboardWindow(QtGui.QMainWindow):
 
         self.transaction_widget = TransactionWidget()
         self.ui.horizontalLayout_content.addWidget(self.transaction_widget)
+        # 如果想要从布局中移除控件，必须在移除后再调用deleteLater方法，否则控件会自由浮动，但不会消失
+        self.ui.horizontalLayout_content.removeWidget(self.transaction_widget)
+        self.transaction_widget.deleteLater()
