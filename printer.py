@@ -5,9 +5,9 @@ from PyQt4 import QtGui
 from views import printer_template
 
 
-class PrinterWindow(QtGui.QWidget):
+class PrinterWidget(QtGui.QWidget):
     def __init__(self):
-        super(PrinterWindow, self).__init__()
+        super(PrinterWidget, self).__init__()
         self.ui = printer_template.Ui_Form()
         self.ui.setupUi(self)
         self.ui.pushButton.clicked.connect(self.print_qinggou_table)

@@ -16,19 +16,16 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(730, 425)
+        MainWindow.resize(408, 91)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
@@ -58,15 +55,43 @@ class Ui_MainWindow(object):
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.toolButton_4 = QtGui.QToolButton(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.toolButton_4.sizePolicy().hasHeightForWidth())
+        self.toolButton_4.setSizePolicy(sizePolicy)
+        self.toolButton_4.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.toolButton_4.setAutoRaise(True)
         self.toolButton_4.setObjectName(_fromUtf8("toolButton_4"))
         self.horizontalLayout.addWidget(self.toolButton_4)
         self.toolButton = QtGui.QToolButton(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.toolButton.sizePolicy().hasHeightForWidth())
+        self.toolButton.setSizePolicy(sizePolicy)
+        self.toolButton.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.toolButton.setAutoRaise(True)
         self.toolButton.setObjectName(_fromUtf8("toolButton"))
         self.horizontalLayout.addWidget(self.toolButton)
         self.toolButton_2 = QtGui.QToolButton(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.toolButton_2.sizePolicy().hasHeightForWidth())
+        self.toolButton_2.setSizePolicy(sizePolicy)
+        self.toolButton_2.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.toolButton_2.setAutoRaise(True)
         self.toolButton_2.setObjectName(_fromUtf8("toolButton_2"))
         self.horizontalLayout.addWidget(self.toolButton_2)
         self.toolButton_3 = QtGui.QToolButton(self.centralwidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Fixed, QtGui.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.toolButton_3.sizePolicy().hasHeightForWidth())
+        self.toolButton_3.setSizePolicy(sizePolicy)
+        self.toolButton_3.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.toolButton_3.setAutoRaise(True)
         self.toolButton_3.setObjectName(_fromUtf8("toolButton_3"))
         self.horizontalLayout.addWidget(self.toolButton_3)
         self.verticalLayout.addLayout(self.horizontalLayout)

@@ -7,12 +7,12 @@ from editor import EditorDialog
 from views import inventory_template
 
 
-class InventoryWindow(QtGui.QWidget):
+class InventoryWidget(QtGui.QWidget):
     DOWN = 1
     UP = -1
 
     def __init__(self):
-        super(InventoryWindow, self).__init__()
+        super(InventoryWidget, self).__init__()
         self.ui = inventory_template.Ui_Form()
         self.ui.setupUi(self)
 

@@ -52,11 +52,3 @@ class EditorDialog(QtGui.QDialog):
             else:
                 print u'未发现键值：', key
         return items
-
-
-if __name__ == '__main__':
-    app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('trebuchet ms', 9))
-    window = EditorDialog()
-    window.show()
-    app.exec_()

@@ -7,9 +7,9 @@ from model import session
 from views import requisition_template
 
 
-class RequisitionWindow(QtGui.QWidget):
+class RequisitionWidget(QtGui.QWidget):
     def __init__(self):
-        super(RequisitionWindow, self).__init__()
+        super(RequisitionWidget, self).__init__()
         self.ui = requisition_template.Ui_Form()
         self.ui.setupUi(self)
         self._initialize_view()
@@ -108,11 +108,3 @@ class RequisitionWindow(QtGui.QWidget):
             self.ui.comboBox_purchase_method.setCurrentIndex(self.method_names.index(r.purchase_method.name))
             self.ui.radioButton_yes.setChecked(r.is_budget)
             self.ui.lineEdit_request_reason.setText(r.request_reason)
-
-
-if __name__ == '__main__':
-    app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('trebuchet ms', 9))
-    window = RequisitionWindow()
-    window.show()
-    app.exec_()

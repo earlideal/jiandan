@@ -7,9 +7,9 @@ from model import session
 from views import contract_template
 
 
-class ContractWindow(QtGui.QWidget):
+class ContractWidget(QtGui.QWidget):
     def __init__(self):
-        super(ContractWindow, self).__init__()
+        super(ContractWidget, self).__init__()
         self.ui = contract_template.Ui_Form()
         self.ui.setupUi(self)
         self._initialize_view()
@@ -60,11 +60,3 @@ class ContractWindow(QtGui.QWidget):
             name = contract.company.name
             self.ui.comboBox_company.setCurrentIndex(self.company_names.index(name))
             self._update_company_info()
-
-
-if __name__ == '__main__':
-    app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('trebuchet ms', 9))
-    window = ContractWindow()
-    window.show()
-    app.exec_()
