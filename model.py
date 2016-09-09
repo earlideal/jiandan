@@ -112,6 +112,8 @@ class Transaction(Model):
     requisition = relationship(Requisition)
     contract_id = Column(Integer, ForeignKey(Contract.id))
     contract = relationship(Contract)
+    create_datetime = Column(DateTime, default=func.now())
+    modified_datetime = Column(DateTime, default=func.now())
 
 
 Model.metadata.create_all(engine)
