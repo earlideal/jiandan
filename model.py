@@ -50,10 +50,10 @@ class PurchaseMethod(Model):
 class Requisition(Model):
     __tablename__ = "requisitions"
     id = Column(Integer, primary_key=True)
+    title = Column(String)
     date = Column(Date, default=func.now())
     applicant_id = Column(Integer, ForeignKey(Staff.id))
     applicant = relationship(Staff)
-    title = Column(String)
     purchase_category_id = Column(Integer, ForeignKey(PurchaseCategory.id))
     purchase_category = relationship(PurchaseCategory)
     purchase_method_id = Column(Integer, ForeignKey(PurchaseMethod.id))
@@ -78,9 +78,9 @@ class Company(Model):
 class Contract(Model):
     __tablename__ = "contracts"
     id = Column(Integer, primary_key=True)
-    contract_name = Column(String)
-    contract_number = Column(String)
-    contract_amount = Column(Float, default=0)
+    name = Column(String)
+    number = Column(String)
+    amount = Column(Float, default=0)
     sign_date = Column(Date, default=func.now())
     company_id = Column(Integer, ForeignKey(Company.id))
     company = relationship(Company)
@@ -112,8 +112,8 @@ class Transaction(Model):
     requisition = relationship(Requisition)
     contract_id = Column(Integer, ForeignKey(Contract.id))
     contract = relationship(Contract)
-    create_datetime = Column(DateTime, default=func.now())
-    modified_datetime = Column(DateTime, default=func.now())
+    created_time = Column(DateTime, default=func.now())
+    modified_time = Column(DateTime, default=func.now())
 
 
 Model.metadata.create_all(engine)
@@ -163,8 +163,7 @@ def preinstall_db():
     kehua = Company(name=u'安徽省科华贸易有限责任公司', contact=u'杨国华', telephone=u'0551-65392835',
                     address=u'安徽省合肥市长江西路677号高新开发区昌河科创大厦702室')
 
-    contract = Contract(contract_name=u'代理进口协议示例一', contract_number='AHCC20160001',
-                        contract_amount=123456.78, company=changhe)
+    contract = Contract(name=u'代理进口协议示例一', number='AHCC20160001', amount=123456.78, company=changhe)
 
     session.add(changhe)
     session.add(kehua)
@@ -173,7 +172,9 @@ def preinstall_db():
 
     ####################################################################################################################
     transaction = Transaction(requisition=req, contract=contract)
+    t = Transaction(requisition=req)
     session.add(transaction)
+    session.add(t)
     session.commit()
 
 
