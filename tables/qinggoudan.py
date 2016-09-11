@@ -6,16 +6,9 @@ from win32com.client import Dispatch
 word = Dispatch('Word.Application')
 word.Visible = 1
 word.DisplayAlerts = 0
-appdir = os.getcwd() + u'\采购表格'
+appdir = os.getcwd() + '\\templates'
 path = appdir + '\\' + u'请购单.docx'
 print path
-
-fill_table_with_content()
-
-word.ActiveDocument.Save()
-# word.ActiveDocument.PrintOut()
-word.ActiveDocument.Close()
-word.Quit()
 
 
 def fill_table_with_content(position, content):
@@ -31,3 +24,11 @@ def fill_table_with_content(position, content):
         cell.Range.Text = content
     except:
         print u'在给表格数据赋值的时候发生错误。', [position]
+
+
+fill_table_with_content([1, 1, 2], u'固体物理研究所')
+
+word.ActiveDocument.Save()
+# word.ActiveDocument.PrintOut()
+word.ActiveDocument.Close()
+word.Quit()

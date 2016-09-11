@@ -14,7 +14,7 @@ class DashboardWindow(QtGui.QMainWindow):
         self.ui.setupUi(self)
         self.ui.toolButton_back_home.clicked.connect(self.back_home)
 
-        headers = [u'事务流水', u'请购标题', u'请购总额', u'合同管理', u'入库报销', u'报销结算', u'经办人', u'创建时间', u'修改时间']
+        headers = [u'事务流水', u'请购标题', u'合同管理', u'经办人', u'创建时间', u'修改时间']
         self.table_model = QtGui.QStandardItemModel()
         self.table_model.setHorizontalHeaderLabels(headers)
         self.ui.tableView.setModel(self.table_model)
@@ -25,7 +25,6 @@ class DashboardWindow(QtGui.QMainWindow):
         # 如果想要从布局中移除控件，必须在移除后再调用deleteLater方法，否则控件会自由浮动，但不会消失
         # self.ui.horizontalLayout_content.removeWidget(self.transaction_widget)
         # self.transaction_widget.deleteLater()
-        self.list_all_transactions()
 
     def back_home(self):
         if self.transaction_widget.isHidden():
@@ -34,8 +33,10 @@ class DashboardWindow(QtGui.QMainWindow):
         else:
             self.transaction_widget.hide()
             self.ui.summary_widget.show()
+        self.list_all_transactions()
 
     def list_all_transactions(self):
+        self.table_model.clear()
         trans = model.session.query(model.Transaction).all()
         for t in trans:
             # headers = [u'事务流水', u'请购标题', u'请购总额', u'合同管理', u'入库检验', u'报销结算', u'经办人', u'创建时间', u'修改时间']
@@ -58,3 +59,4 @@ class DashboardWindow(QtGui.QMainWindow):
                 item = QtGui.QStandardItem(eval(k))
                 row.append(item)
             self.table_model.appendRow(row)
+            self.ui.tableView.resizeColumnsToContents()
