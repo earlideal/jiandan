@@ -124,7 +124,7 @@ session = Session()
 
 # 模拟数据
 def preinstall_db():
-    names = [u'苏付海', u'刘晓迪', u'杨雪', u'姜树清', u'丁俊峰', u'王媛', u'蒋华超', u'Alex', u'Eugene']
+    names = [u'虚拟员工', u'苏付海', u'刘晓迪', u'杨雪', u'姜树清', u'丁俊峰', u'王媛', u'蒋华超', u'Alex', u'Eugene']
     staffs = []
     for name in names:
         staffs.append(Staff(name=name))
@@ -144,7 +144,7 @@ def preinstall_db():
     for m in methods_list:
         methods.append(PurchaseMethod(name=m))
 
-    req = Requisition(title=u'拟采购的实验设备', applicant=staffs[5], project=p2, purchase_category=categories[0],
+    req = Requisition(title=u'拟采购的实验设备', applicant=staffs[0], project=p2, purchase_category=categories[0],
                       is_budget=True, budget_amount=100000, purchase_method=methods[0],
                       request_reason=u'该项目是中科院修购专项批准购买的专项设备。')
 
