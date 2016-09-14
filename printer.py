@@ -2,6 +2,7 @@
 
 from PyQt4 import QtGui
 
+from tables import word
 from views import printer_template
 
 
@@ -13,4 +14,4 @@ class PrinterWidget(QtGui.QWidget):
         self.ui.pushButton.clicked.connect(self.print_qinggou_table)
 
     def print_qinggou_table(self):
-        print "qinggou"
+        w = word.WordProcessor()
