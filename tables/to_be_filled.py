@@ -15,5 +15,5 @@ def fill_tables_with_content(application, file, position, content):
     cell.Range.Text = content
     application.ActiveDocument.Save()
     t = cell.Range.Text
-    print t
+
     application.Quit()
