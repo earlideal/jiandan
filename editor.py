@@ -4,7 +4,7 @@ import copy
 
 from PyQt4 import QtGui
 
-from model import InventoryRowModel
+from model import InventoryList
 from views import editor_template
 
 
@@ -45,7 +45,7 @@ class EditorDialog(QtGui.QDialog):
         items.pop('ui')
 
         keys = items.keys()
-        inventory = InventoryRowModel()
+        inventory = InventoryList()
         for key in keys:
             if hasattr(inventory, key):
                 setattr(inventory, key, items[key])

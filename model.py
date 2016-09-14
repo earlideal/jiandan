@@ -86,9 +86,22 @@ class Contract(Model):
     company = relationship(Company)
 
 
-class InventoryRowModel(Model):
+class Transaction(Model):
+    __tablename__ = "transactions"
+    id = Column(Integer, primary_key=True)
+    swift_code = Column(String, default=datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
+    requisition_id = Column(Integer, ForeignKey(Requisition.id))
+    requisition = relationship(Requisition)
+    contract_id = Column(Integer, ForeignKey(Contract.id))
+    contract = relationship(Contract)
+    created_time = Column(DateTime, default=func.now())
+    modified_time = Column(DateTime, default=func.now())
+
+
+class InventoryList(Model):
     __tablename__ = "inventories"
     id = Column(Integer, primary_key=True)
+    swift_code = Column(String, ForeignKey(Transaction.swift_code), nullable=False)
     name = Column(String)
     model = Column(String)
     manufacture = Column(String)
@@ -102,18 +115,6 @@ class InventoryRowModel(Model):
     acceptance_price = Column(Float)
     acceptance_sum = Column(Float)
     description = Column(String)
-
-
-class Transaction(Model):
-    __tablename__ = "transactions"
-    id = Column(Integer, primary_key=True)
-    swift_code = Column(String, default=datetime.datetime.now().strftime("%Y%m%d%H%M%S"))
-    requisition_id = Column(Integer, ForeignKey(Requisition.id))
-    requisition = relationship(Requisition)
-    contract_id = Column(Integer, ForeignKey(Contract.id))
-    contract = relationship(Contract)
-    created_time = Column(DateTime, default=func.now())
-    modified_time = Column(DateTime, default=func.now())
 
 
 Model.metadata.create_all(engine)
@@ -172,9 +173,7 @@ def preinstall_db():
 
     ####################################################################################################################
     transaction = Transaction(requisition=req, contract=contract)
-    t = Transaction(requisition=req)
     session.add(transaction)
-    session.add(t)
     session.commit()
 
 
