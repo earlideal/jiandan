@@ -2,6 +2,8 @@
 
 from win32com.client import Dispatch
 
+import model
+
 
 class WordProcessor(object):
     def __init__(self):
