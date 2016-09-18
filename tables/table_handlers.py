@@ -2,24 +2,14 @@
 import model
 
 
-def fill_tables_with_content(application, file, position, content):
+def disassemble_word_tables(application, file):
     path = 'C:\\Users\\John\\Documents\\PYTHON\\jiandan\\templates\\'
     path = path + file
     document = application.Documents.Open(path)
-    table_seq = position[0]
-    row_seq = position[1]
-    col_seq = position[2]
-    cell = document.Tables(table_seq).Cell(Row=row_seq, Column=col_seq)
-    cell.Range.Text = content
-    application.ActiveDocument.Save()
-    t = cell.Range.Text
 
-    application.Quit()
+    demo_swift_code = '20160914225507'
 
-
-def fill_table_with_content(application, file):
-    swift_code = '20160914215718'
-    transaction = model.session.query(model.Transaction).filter_by(swift_code=swift_code).first()
+    transaction = model.session.query(model.Transaction).filter_by(swift_code=demo_swift_code).first()
     requisition = transaction.requisition
     req_date = requisition.date
     req_applicant = requisition.applicant
