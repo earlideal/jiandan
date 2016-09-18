@@ -39,5 +39,5 @@ def fill_table_cell(document, position, text):
 
 def list_all_inventories():
     transaction = model.session.query(model.Transaction).filter_by(swift_code=swift_code).first()
-    items = model.session.query(model.InventoryList).filter_by(swift_code=transaction.swift_code).all()
+    items = model.session.query(model.Inventory).filter_by(swift_code=transaction.swift_code).all()
     print len(items)

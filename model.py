@@ -98,7 +98,7 @@ class Transaction(Model):
     modified_time = Column(DateTime, default=func.now())
 
 
-class InventoryList(Model):
+class Inventory(Model):
     __tablename__ = "inventories"
     id = Column(Integer, primary_key=True)
     swift_code = Column(String, ForeignKey(Transaction.swift_code), nullable=False)
@@ -115,6 +115,29 @@ class InventoryList(Model):
     acceptance_price = Column(Float)
     acceptance_sum = Column(Float)
     description = Column(String)
+
+    def __init__(self, swift_code, name, model, unit=u'只', quantity=1, quotation_price=0, quotation_currency='CNY',
+                 requisition_price=0, acceptance_price=0, description=''):
+        self.swift_code = swift_code
+        self.name = name
+        self.model = model
+        self.unit = unit
+        self.quantity = quantity
+        self.quotation_price = quotation_price
+        self.quotation_currency = quotation_currency
+
+        if requisition_price == 0:
+            self.requisition_price = quotation_price
+        else:
+            self.requisition_price = requisition_price
+        if acceptance_price == 0:
+            self.acceptance_price = quotation_price
+        else:
+            self.acceptance_price = acceptance_price
+
+        self.description = description
+        self.requisition_sum = quantity * self.requisition_price
+        self.acceptance_sum = quantity * self.acceptance_price
 
 
 Model.metadata.create_all(engine)
@@ -157,7 +180,7 @@ def preinstall_db():
 
     ####################################################################################################################
 
-    # 添加公司信息
+    # 添加公司信息及合同信息
     changhe = Company(name=u'安徽长和进出口有限公司', contact=u'江云云', telephone=u'0551-64260008',
                       address=u'合肥市高新区香樟大道211号创展大厦C座2003室')
 
@@ -169,11 +192,21 @@ def preinstall_db():
     session.add(changhe)
     session.add(kehua)
     session.add(contract)
+
+    ####################################################################################################################
+
+    # 添加事务信息
+    transaction = Transaction(requisition=req, contract=contract)
+    session.add(transaction)
     session.commit()
 
     ####################################################################################################################
-    transaction = Transaction(requisition=req, contract=contract)
-    session.add(transaction)
+
+    # 添加采购清单列表
+    inventory = Inventory(swift_code=transaction.swift_code, name=u'针式打印机', model='LQ-80KF', quantity=2,
+                          quotation_price=1234.56)
+    session.add(inventory)
+
     session.commit()
 
 
