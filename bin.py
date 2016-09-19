@@ -5,8 +5,8 @@ from tables import win32word
 
 if __name__ == '__main__':
     app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('book antiqua', 9))
-    app.setStyle('windows')
+    app.setFont(QtGui.QFont('trebuchet ms', 9))
+    app.setStyle('windowsxp')
     w = win32word.WordProcessor()
     window = DashboardWindow()
     window.showMaximized()

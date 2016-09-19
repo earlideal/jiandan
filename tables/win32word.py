@@ -12,7 +12,7 @@ class WordProcessor(object):
         self.word_application.Visible = 1
         self.word_application.DisplayAlerts = 0
 
-        self._fill_blanks()
+        # self._fill_blanks()
         self._quit_word_application()
 
     def _fill_blanks(self):
