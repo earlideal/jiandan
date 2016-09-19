@@ -203,9 +203,10 @@ def preinstall_db():
     ####################################################################################################################
 
     # 添加采购清单列表
-    inventory = Inventory(swift_code=transaction.swift_code, name=u'针式打印机', model='LQ-80KF', quantity=2,
-                          quotation_price=1234.56)
-    session.add(inventory)
+    for i in xrange(0, 10):
+        inventory = Inventory(swift_code=transaction.swift_code, name=u'针式打印机' + str(i), model='LQ-80KF', quantity=i,
+                              quotation_price=1234.56)
+        session.add(inventory)
 
     session.commit()
 
