@@ -16,19 +16,16 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(925, 531)
+        MainWindow.resize(439, 162)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
@@ -126,7 +123,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.label.setText(_translate("MainWindow", "简·单", None))
-        self.toolButton_back_home.setText(_translate("MainWindow", "返回桌面", None))
+        self.toolButton_back_home.setText(_translate("MainWindow", "首页", None))
         self.toolButton_new_trans.setText(_translate("MainWindow", "新建事务", None))
         self.toolButton_save_trans.setText(_translate("MainWindow", "保存事务", None))
-        self.toolButton_manage_staff.setText(_translate("MainWindow", "人员管理", None))
+        self.toolButton_manage_staff.setText(_translate("MainWindow", "打印事务", None))

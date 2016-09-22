@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>925</width>
-    <height>531</height>
+    <width>439</width>
+    <height>162</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,7 +97,7 @@
          </size>
         </property>
         <property name="text">
-         <string>返回桌面</string>
+         <string>首页</string>
         </property>
         <property name="autoRaise">
          <bool>true</bool>
@@ -163,7 +163,7 @@
          </size>
         </property>
         <property name="text">
-         <string>人员管理</string>
+         <string>打印事务</string>
         </property>
         <property name="autoRaise">
          <bool>true</bool>

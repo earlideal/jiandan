@@ -16,19 +16,16 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(640, 480)
+        Form.resize(224, 78)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.tabWidget = QtGui.QTabWidget(Form)
@@ -45,6 +42,7 @@ class Ui_Form(object):
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName(_fromUtf8("tab_2"))
         self.verticalLayout_4 = QtGui.QVBoxLayout(self.tab_2)
+        self.verticalLayout_4.setContentsMargins(0, -1, 0, -1)
         self.verticalLayout_4.setObjectName(_fromUtf8("verticalLayout_4"))
         self.verticalLayout_contract_tab = QtGui.QVBoxLayout()
         self.verticalLayout_contract_tab.setObjectName(_fromUtf8("verticalLayout_contract_tab"))
@@ -53,19 +51,12 @@ class Ui_Form(object):
         self.tab_3 = QtGui.QWidget()
         self.tab_3.setObjectName(_fromUtf8("tab_3"))
         self.verticalLayout_6 = QtGui.QVBoxLayout(self.tab_3)
+        self.verticalLayout_6.setContentsMargins(0, -1, 0, -1)
         self.verticalLayout_6.setObjectName(_fromUtf8("verticalLayout_6"))
         self.verticalLayout_acceptance_tab = QtGui.QVBoxLayout()
         self.verticalLayout_acceptance_tab.setObjectName(_fromUtf8("verticalLayout_acceptance_tab"))
         self.verticalLayout_6.addLayout(self.verticalLayout_acceptance_tab)
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
-        self.tab_4 = QtGui.QWidget()
-        self.tab_4.setObjectName(_fromUtf8("tab_4"))
-        self.verticalLayout_8 = QtGui.QVBoxLayout(self.tab_4)
-        self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
-        self.verticalLayout_printer_tab = QtGui.QVBoxLayout()
-        self.verticalLayout_printer_tab.setObjectName(_fromUtf8("verticalLayout_printer_tab"))
-        self.verticalLayout_8.addLayout(self.verticalLayout_printer_tab)
-        self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
         self.verticalLayout.addWidget(self.tabWidget)
         self.horizontalLayout_inventory = QtGui.QHBoxLayout()
         self.horizontalLayout_inventory.setSpacing(0)
@@ -83,4 +74,3 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Form", "采购申请", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Form", "合同管理", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("Form", "入库报销", None))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("Form", "单据打印", None))

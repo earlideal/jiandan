@@ -16,19 +16,16 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
-
-
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(1082, 106)
+        Form.resize(1002, 106)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.gridLayout = QtGui.QGridLayout()
@@ -80,7 +77,7 @@ class Ui_Form(object):
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.gridLayout.addWidget(self.label_4, 0, 10, 1, 1)
         self.comboBox_applicant = QtGui.QComboBox(Form)
-        self.comboBox_applicant.setMinimumSize(QtCore.QSize(120, 0))
+        self.comboBox_applicant.setMinimumSize(QtCore.QSize(100, 0))
         self.comboBox_applicant.setMaximumSize(QtCore.QSize(120, 100))
         self.comboBox_applicant.setObjectName(_fromUtf8("comboBox_applicant"))
         self.gridLayout.addWidget(self.comboBox_applicant, 0, 9, 1, 1)
@@ -95,13 +92,13 @@ class Ui_Form(object):
         self.gridLayout.addWidget(self.label_9, 1, 6, 1, 1)
         self.doubleSpinBox_budget_amount = QtGui.QDoubleSpinBox(Form)
         self.doubleSpinBox_budget_amount.setEnabled(False)
-        self.doubleSpinBox_budget_amount.setMinimumSize(QtCore.QSize(120, 0))
+        self.doubleSpinBox_budget_amount.setMinimumSize(QtCore.QSize(100, 0))
         self.doubleSpinBox_budget_amount.setMaximumSize(QtCore.QSize(120, 100))
         self.doubleSpinBox_budget_amount.setMaximum(999999999.99)
         self.doubleSpinBox_budget_amount.setObjectName(_fromUtf8("doubleSpinBox_budget_amount"))
         self.gridLayout.addWidget(self.doubleSpinBox_budget_amount, 1, 3, 1, 1)
         self.dateEdit_request_date = QtGui.QDateEdit(Form)
-        self.dateEdit_request_date.setMinimumSize(QtCore.QSize(120, 0))
+        self.dateEdit_request_date.setMinimumSize(QtCore.QSize(100, 0))
         self.dateEdit_request_date.setMaximumSize(QtCore.QSize(120, 100))
         self.dateEdit_request_date.setObjectName(_fromUtf8("dateEdit_request_date"))
         self.gridLayout.addWidget(self.dateEdit_request_date, 0, 11, 1, 1)
@@ -124,7 +121,7 @@ class Ui_Form(object):
         self.label.setObjectName(_fromUtf8("label"))
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.frame = QtGui.QFrame(Form)
-        self.frame.setMinimumSize(QtCore.QSize(120, 0))
+        self.frame.setMinimumSize(QtCore.QSize(100, 0))
         self.frame.setMaximumSize(QtCore.QSize(120, 100))
         self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame.setObjectName(_fromUtf8("frame"))

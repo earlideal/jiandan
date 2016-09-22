@@ -2,13 +2,13 @@
 
 from PyQt4 import QtGui
 
-from views import printer_template
+from views import sheets_print_template
 
 
-class PrinterWidget(QtGui.QWidget):
+class PrintDialog(QtGui.QDialog):
     def __init__(self):
-        super(PrinterWidget, self).__init__()
-        self.ui = printer_template.Ui_Form()
+        super(PrintDialog, self).__init__()
+        self.ui = sheets_print_template.Ui_Dialog()
         self.ui.setupUi(self)
 
         self.label_req = QtGui.QLabel()
@@ -31,7 +31,7 @@ class PrinterWidget(QtGui.QWidget):
             x.clicked.connect(self.print_relevant_file)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.hbox.addItem(spacerItem)
-        self.ui.horizontalLayout.addLayout(self.hbox)
+        self.ui.verticalLayout_sheets.addLayout(self.hbox)
 
     def print_relevant_file(self):
         print self.sender().text()
