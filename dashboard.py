@@ -3,6 +3,7 @@
 from PyQt4 import QtGui
 
 import model
+from sheets_print import PrintDialog
 from transaction import TransactionWidget
 from views import dashboard_template
 
@@ -12,7 +13,8 @@ class DashboardWindow(QtGui.QMainWindow):
         super(DashboardWindow, self).__init__()
         self.ui = dashboard_template.Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.toolButton_back_home.clicked.connect(self.back_home)
+        self.ui.toolButton_home.clicked.connect(self.go_home)
+        self.ui.toolButton_print.clicked.connect(self.show_print_dialog)
 
         headers = [u'事务流水', u'请购标题', u'合同管理', u'经办人', u'创建时间', u'修改时间']
         self.table_model = QtGui.QStandardItemModel()
@@ -26,7 +28,7 @@ class DashboardWindow(QtGui.QMainWindow):
         # self.ui.horizontalLayout_content.removeWidget(self.transaction_widget)
         # self.transaction_widget.deleteLater()
 
-    def back_home(self):
+    def go_home(self):
         if self.transaction_widget.isHidden():
             self.transaction_widget.show()
             self.ui.summary_widget.hide()
@@ -39,7 +41,6 @@ class DashboardWindow(QtGui.QMainWindow):
         self.table_model.clear()
         trans = model.session.query(model.Transaction).all()
         for t in trans:
-            # headers = [u'事务流水', u'请购标题', u'请购总额', u'合同管理', u'入库检验', u'报销结算', u'经办人', u'创建时间', u'修改时间']
             headers = [u'事务流水', u'请购标题', u'合同管理', u'经办人', u'创建时间', u'修改时间']
             keys = ['swiftcode', 'title', 'contract', 'applicant', 'createdtime', 'modifiedtime']
             req = model.session.query(model.Requisition).filter_by(id=t.requisition_id).first()
@@ -60,3 +61,7 @@ class DashboardWindow(QtGui.QMainWindow):
                 row.append(item)
             self.table_model.appendRow(row)
             self.ui.tableView.resizeColumnsToContents()
+
+    def show_print_dialog(self):
+        dialog = PrintDialog()
+        dialog.exec_()

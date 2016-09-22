@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>439</width>
-    <height>162</height>
+    <height>163</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,12 +89,19 @@
        </spacer>
       </item>
       <item>
-       <widget class="QToolButton" name="toolButton_back_home">
+       <widget class="QToolButton" name="toolButton_home">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
           <height>30</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Microsoft YaHei UI</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
         </property>
         <property name="text">
          <string>首页</string>
@@ -118,6 +125,13 @@
           <height>30</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <family>Microsoft YaHei UI</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>新建事务</string>
         </property>
@@ -140,6 +154,13 @@
           <height>30</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <family>Microsoft YaHei UI</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>保存事务</string>
         </property>
@@ -149,7 +170,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="toolButton_manage_staff">
+       <widget class="QToolButton" name="toolButton_print">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
           <horstretch>0</horstretch>
@@ -161,6 +182,13 @@
           <width>16777215</width>
           <height>30</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Microsoft YaHei UI</family>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
         </property>
         <property name="text">
          <string>打印事务</string>
