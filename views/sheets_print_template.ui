@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
+    <width>575</width>
     <height>262</height>
    </rect>
   </property>
@@ -220,7 +220,7 @@
       <number>9</number>
      </property>
      <item>
-      <widget class="QToolButton" name="toolButton_2">
+      <widget class="QToolButton" name="toolButton_generate">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -254,9 +254,6 @@
         <enum>QFrame::Sunken</enum>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="margin">
-         <number>0</number>
-        </property>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_sheets"/>
         </item>

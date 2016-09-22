@@ -5,9 +5,9 @@ from win32com.client import Dispatch
 import model
 
 
-class WordProcessor(object):
+class WordSheetsHandler(object):
     def __init__(self):
-        super(WordProcessor, self).__init__()
+        super(WordSheetsHandler, self).__init__()
         self.word_application = Dispatch('Word.Application')
         self.word_application.Visible = 1
         self.word_application.DisplayAlerts = 0
