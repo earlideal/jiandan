@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-
 import os
+from functools import partial
 
 from PyQt4 import QtGui
+from win32com.client import Dispatch
 
-import microsoftword
 import model
 from views import sheets_print_template
 
@@ -40,11 +40,10 @@ class PrintDialog(QtGui.QDialog):
                            'LADING_BILL_SHEET': False,
                            'FACILITY_SHEET': False}
 
-        self.fill_sheets_blanks(to_be_generated)
+        self._fill_sheets_blanks(to_be_generated)
 
-    def fill_sheets_blanks(self, to_be_generated):
-        word_handler = microsoftword.WordSheetsHandler()
-        application = word_handler.application
+    def _fill_sheets_blanks(self, to_be_generated):
+        word = get_microsoft_word()
         dir = os.getcwd() + os.path.sep + 'sheets' + os.path.sep
         transaction = model.session.query(model.Transaction).first()
         requisition = transaction.requisition
@@ -84,7 +83,7 @@ class PrintDialog(QtGui.QDialog):
                 paper_pieces = paper_pieces + 1
 
             for i in xrange(0, paper_pieces):
-                document = application.Documents.Open(path)
+                document = word.Documents.Open(path)
                 fill_cell_with_text(document, [1, 1, 4], req_project.grant_number)
                 fill_cell_with_text(document, [1, 1, 8], req_date)
 
@@ -105,8 +104,8 @@ class PrintDialog(QtGui.QDialog):
                         fill_cell_with_text(document, [2, j + 1, c + 1], data[c])
 
                 file = u'REQUISITION_SHEET_%s.docx' % (i + 1)
-                application.ActiveDocument.SaveAs(file)
-                application.ActiveDocument.Close()
+                word.ActiveDocument.SaveAs(file)
+                word.ActiveDocument.Close()
             self._generate_print_list(sheet_name, paper_pieces)
 
         #####################################
@@ -117,7 +116,7 @@ class PrintDialog(QtGui.QDialog):
         if to_be_generated[sheet_name]:
             print u'正在生成%s ...' % self.sheets_name_zh[sheet_name]
             path = dir + file
-            document = application.Documents.Open(path)
+            document = word.Documents.Open(path)
             reason_tech_spec = u'采购理由：' + req_reason + '\n' + u'技术指标：'  # + req_tech_spec
             data = [req_title, req_purchase_category.name, [u'否', u'是'][req_is_budget], req_budget_amount,
                     req_project.grant_number, req_purchase_method.name, reason_tech_spec]
@@ -125,8 +124,8 @@ class PrintDialog(QtGui.QDialog):
             for c in xrange(len(cells)):
                 fill_cell_with_text(document, cells[c], data[c])
             file = u'REQUISITION_REVIEW_TABLE_1.docx'
-            application.ActiveDocument.SaveAs(file)
-            application.ActiveDocument.Close()
+            word.ActiveDocument.SaveAs(file)
+            word.ActiveDocument.Close()
 
         #####################################
         # 合同评审表
@@ -145,7 +144,7 @@ class PrintDialog(QtGui.QDialog):
             paper_pieces = items_count / ROW_COUNT
 
             for i in xrange(0, paper_pieces):
-                document = application.Documents.Open(path)
+                document = word.Documents.Open(path)
                 grant_num = req_project.grant_number
                 for j in xrange(0, ROW_COUNT):
                     m = i * ROW_COUNT + j
@@ -168,8 +167,8 @@ class PrintDialog(QtGui.QDialog):
                             fill_cell_with_text(document, [1, r + 1, (c + 1) * 2], data[r][c])
 
                 file = u'VERIFICATION_SHEET_%s.docx' % (i + 1)
-                application.ActiveDocument.SaveAs(file)
-                application.ActiveDocument.Close()
+                word.ActiveDocument.SaveAs(file)
+                word.ActiveDocument.Close()
 
         #####################################
         # 设备验收表
@@ -183,7 +182,7 @@ class PrintDialog(QtGui.QDialog):
         # 设备卡
         #####################################
         print u'数据表生成完成！'
-        application.Quit()
+        word.Quit()
 
     def _generate_print_list(self, sheet_name_en, total_sheets_num):
 
@@ -210,7 +209,8 @@ class PrintDialog(QtGui.QDialog):
             toolButton.setText(str(i))
             name = sheet_name_en + '_' + str(i) + '.docx'
             sheet_buttons.append(toolButton)
-            toolButton.clicked.connect(lambda: self.print_relevant_sheet(name))
+            # 此处不能使用lambda表达式，会总是打开最后一个赋值的文件
+            toolButton.clicked.connect(partial(self.print_relevant_sheet, name))
         hbox = QtGui.QHBoxLayout()
         hbox.setSpacing(0)
         hbox.addWidget(label_req)
@@ -220,15 +220,17 @@ class PrintDialog(QtGui.QDialog):
         hbox.addItem(spacerItem)
         self.ui.verticalLayout_sheets.addLayout(hbox)
 
-    def print_relevant_sheet(self, name):
-        # 此处困扰了我很久，在该方法中，word的文档路径不能与点击的按钮本身有任何联系（如按钮的text()等）
+    def print_relevant_sheet(self, file_name):
+        # 此处困扰了我很久
+        # 在该方法中，word打开的文档路径不能与点击的按钮本身有任何联系（如按钮的text()等）
         # 否则会导致堆栈溢出错误，原因不明
         # 传递一般文本作为路径是可行的
-        path = 'C:\Users\John\Documents' + os.path.sep + name
+        path = 'C:\Users\John\Documents' + os.path.sep + file_name
         print path
-        word = microsoftword.WordSheetsHandler()
-        application = word.application
-        document = application.Documents.Open(path)
+        word = get_microsoft_word()
+        document = word.Documents.Open(path)
+        document.PrintOut()
+        document.Close()
 
 
 def fill_cell_with_text(document, position, text):
@@ -238,6 +240,14 @@ def fill_cell_with_text(document, position, text):
         col_seq = position[2]
         cell = document.Tables(table_seq).Cell(Row=row_seq, Column=col_seq)
         cell.Range.Text = text
+
+
+def get_microsoft_word():
+    # 通过pywin32调用word程序
+    application = Dispatch('Word.Application')
+    application.Visible = 0
+    application.DisplayAlerts = 0
+    return application
 
 
 if __name__ == '__main__':

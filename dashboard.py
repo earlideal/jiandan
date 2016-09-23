@@ -3,7 +3,7 @@
 from PyQt4 import QtGui
 
 import model
-from generatesheets import PrintDialog
+from sheets_handler import PrintDialog
 from transaction import TransactionWidget
 from views import dashboard_template
 
