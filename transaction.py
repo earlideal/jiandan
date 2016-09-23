@@ -2,9 +2,9 @@ from PyQt4 import QtGui
 
 from acceptance import AcceptanceWidget
 from contract import ContractWidget
+from generatesheets import PrintDialog
 from inventory import InventoryWidget
 from requisition import RequisitionWidget
-from sheets_print import PrintDialog
 from views import transaction_template
 
 

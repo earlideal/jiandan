@@ -15,6 +15,7 @@ class PrintDialog(QtGui.QDialog):
         self.ui = sheets_print_template.Ui_Dialog()
         self.ui.setupUi(self)
         self.ui.toolButton_generate.clicked.connect(self._generate_sheets_file)
+
         self.sheets_name_en = ['REQUISITION_SHEET', 'REQUISITION_REVIEW_TABLE', 'CONTRACT_REVIEW_TABLE',
                                'VERIFICATION_SHEET', 'VERIFICATION_REVIEW_TABLE', 'LADING_BILL_SHEET', 'FACILITY_SHEET']
         self.sheets_name_zh = {'REQUISITION_SHEET': u'请购单',
@@ -25,47 +26,12 @@ class PrintDialog(QtGui.QDialog):
                                'LADING_BILL_SHEET': u'直发单',
                                'FACILITY_SHEET': u'设备卡'}
 
-    def _generate_sheets_list(self):
-        # 生成打印项目前，需要先清除之前生成的项目
-        # frame.children()仅仅列出来最基础一层布局，不会列出来子布局
-        # 想要列出子布局，必须用子布局的父级进行枚举，但这种方式不能枚举出子widget
-        for child in self.ui.frame.children():
-            if isinstance(child, QtGui.QWidget):
-                self.ui.verticalLayout_sheets.removeWidget(child)
-                child.deleteLater()
-        for child in self.ui.verticalLayout_sheets.children():
-            self.ui.verticalLayout_sheets.removeItem(child)
-
-    def _generate_sheets_num(self, sheet_name_zh, total_sheets_num):
-        label_req = QtGui.QLabel()
-        label_req.setText(sheet_name_zh)
-        numbered_buttons = []
-        for i in xrange(1, total_sheets_num + 1):
-            toolButton = QtGui.QToolButton()
-            font = QtGui.QFont()
-            font.setUnderline(True)
-            toolButton.setFont(font)
-            toolButton.setAutoRaise(True)
-            toolButton.setText(str(i))
-            numbered_buttons.append(toolButton)
-        hbox = QtGui.QHBoxLayout()
-        hbox.addSpacing(0)
-        hbox.addWidget(label_req)
-        for x in numbered_buttons:
-            hbox.addWidget(x)
-            x.clicked.connect(self.print_relevant_file)
-        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        hbox.addItem(spacerItem)
-        self.ui.verticalLayout_sheets.addLayout(hbox)
-
     def _generate_sheets_file(self):
         # temp = (''.join(map(lambda xx: (hex(ord(xx))[2:]), os.urandom(8)))).upper()
         temp = 'temp'
         path = os.path.abspath(temp)
         if not os.path.exists(path):
             os.mkdir(temp)
-        word = microsoftword.WordSheetsHandler()
-        application = word.application
         to_be_generated = {'REQUISITION_SHEET': True,
                            'REQUISITION_REVIEW_TABLE': False,
                            'CONTRACT_REVIEW_TABLE': False,
@@ -74,9 +40,11 @@ class PrintDialog(QtGui.QDialog):
                            'LADING_BILL_SHEET': False,
                            'FACILITY_SHEET': False}
 
-        self.fill_sheets_blanks(application, to_be_generated)
+        self.fill_sheets_blanks(to_be_generated)
 
-    def fill_sheets_blanks(self, application, to_be_generated):
+    def fill_sheets_blanks(self, to_be_generated):
+        word_handler = microsoftword.WordSheetsHandler()
+        application = word_handler.application
         dir = os.getcwd() + os.path.sep + 'sheets' + os.path.sep
         transaction = model.session.query(model.Transaction).first()
         requisition = transaction.requisition
@@ -105,9 +73,8 @@ class PrintDialog(QtGui.QDialog):
         # 请购单
         #####################################
         file = u'REQUISITION_SHEET.docx'
-        splits = file.split('.')
-        if to_be_generated[splits[0]]:
-            print u'正在生成%s ...' % self.sheets_name_zh[splits[0]]
+        sheet_name = file.split('.')[0]
+        if to_be_generated[sheet_name]:
             path = dir + file
             ROW_COUNT = 8
 
@@ -140,14 +107,15 @@ class PrintDialog(QtGui.QDialog):
                 file = u'REQUISITION_SHEET_%s.docx' % (i + 1)
                 application.ActiveDocument.SaveAs(file)
                 application.ActiveDocument.Close()
+            self._generate_print_list(sheet_name, paper_pieces)
 
         #####################################
         # 采购申请评审表
         #####################################
         file = u'REQUISITION_REVIEW_TABLE.docx'
-        splits = file.split('.')
-        if to_be_generated[splits[0]]:
-            print u'正在生成%s ...' % self.sheets_name_zh[splits[0]]
+        sheet_name = file.split('.')[0]
+        if to_be_generated[sheet_name]:
+            print u'正在生成%s ...' % self.sheets_name_zh[sheet_name]
             path = dir + file
             document = application.Documents.Open(path)
             reason_tech_spec = u'采购理由：' + req_reason + '\n' + u'技术指标：'  # + req_tech_spec
@@ -168,9 +136,9 @@ class PrintDialog(QtGui.QDialog):
         # 检验单
         #####################################
         file = u'VERIFICATION_SHEET.docx'
-        splits = file.split('.')
-        if to_be_generated[splits[0]]:
-            print u'正在生成%s ...' % self.sheets_name_zh[splits[0]]
+        sheet_name = file.split('.')[0]
+        if to_be_generated[sheet_name]:
+            print u'正在生成%s ...' % self.sheets_name_zh[sheet_name]
             path = dir + file
 
             ROW_COUNT = 1
@@ -214,24 +182,68 @@ class PrintDialog(QtGui.QDialog):
         #####################################
         # 设备卡
         #####################################
-        pass
+        print u'数据表生成完成！'
+        application.Quit()
 
-    def print_relevant_file(self):
-        print unicode(self.sender().text()) + u'做了点击动作。'
+    def _generate_print_list(self, sheet_name_en, total_sheets_num):
+
+        # 生成打印项目前，需要先清除之前生成的项目
+        # frame.children()仅仅列出来最基础一层布局，不会列出来子布局
+        # 想要列出子布局，必须用子布局的父级进行枚举，但这种方式不能枚举出子widget
+        for child in self.ui.frame.children():
+            if isinstance(child, QtGui.QWidget):
+                self.ui.verticalLayout_sheets.removeWidget(child)
+                child.deleteLater()
+        for child in self.ui.verticalLayout_sheets.children():
+            self.ui.verticalLayout_sheets.removeItem(child)
+
+        label_req = QtGui.QLabel()
+        label_req.setText(self.sheets_name_zh[sheet_name_en])
+        sheet_buttons = []
+        font = QtGui.QFont()
+        font.setUnderline(True)
+        for i in xrange(1, total_sheets_num + 1):
+            toolButton = QtGui.QToolButton()
+            toolButton.setFont(font)
+            toolButton.setAutoRaise(True)
+            toolButton.setObjectName(sheet_name_en)
+            toolButton.setText(str(i))
+            name = sheet_name_en + '_' + str(i) + '.docx'
+            sheet_buttons.append(toolButton)
+            toolButton.clicked.connect(lambda: self.print_relevant_sheet(name))
+        hbox = QtGui.QHBoxLayout()
+        hbox.setSpacing(0)
+        hbox.addWidget(label_req)
+        for x in sheet_buttons:
+            hbox.addWidget(x)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        hbox.addItem(spacerItem)
+        self.ui.verticalLayout_sheets.addLayout(hbox)
+
+    def print_relevant_sheet(self, name):
+        # 此处困扰了我很久，在该方法中，word的文档路径不能与点击的按钮本身有任何联系（如按钮的text()等）
+        # 否则会导致堆栈溢出错误，原因不明
+        # 传递一般文本作为路径是可行的
+        path = 'C:\Users\John\Documents' + os.path.sep + name
+        print path
+        word = microsoftword.WordSheetsHandler()
+        application = word.application
+        document = application.Documents.Open(path)
 
 
 def fill_cell_with_text(document, position, text):
-    table_seq = position[0]
-    row_seq = position[1]
-    col_seq = position[2]
-    cell = document.Tables(table_seq).Cell(Row=row_seq, Column=col_seq)
-    cell.Range.Text = text
+    if len(position) == 3:
+        table_seq = position[0]
+        row_seq = position[1]
+        col_seq = position[2]
+        cell = document.Tables(table_seq).Cell(Row=row_seq, Column=col_seq)
+        cell.Range.Text = text
 
 
 if __name__ == '__main__':
     app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('century gothic', 9))
-    app.setStyle('windows')
+    app.setFont(QtGui.QFont('trebuchet ms', 9))
+    app.setStyle('windowsvista')
     dialog = PrintDialog()
     dialog.show()
     app.exec_()
