@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>575</width>
+    <width>750</width>
     <height>262</height>
    </rect>
   </property>
@@ -253,7 +253,7 @@
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_frame">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_sheets"/>
         </item>

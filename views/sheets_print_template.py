@@ -25,7 +25,7 @@ except AttributeError:
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName(_fromUtf8("Dialog"))
-        Dialog.resize(575, 262)
+        Dialog.resize(750, 262)
         self.horizontalLayout_2 = QtGui.QHBoxLayout(Dialog)
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
         self.verticalLayout_gen = QtGui.QVBoxLayout()
@@ -122,11 +122,11 @@ class Ui_Dialog(object):
         self.frame.setFrameShape(QtGui.QFrame.Panel)
         self.frame.setFrameShadow(QtGui.QFrame.Sunken)
         self.frame.setObjectName(_fromUtf8("frame"))
-        self.horizontalLayout = QtGui.QHBoxLayout(self.frame)
-        self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
+        self.verticalLayout_frame = QtGui.QVBoxLayout(self.frame)
+        self.verticalLayout_frame.setObjectName(_fromUtf8("verticalLayout_frame"))
         self.verticalLayout_sheets = QtGui.QVBoxLayout()
         self.verticalLayout_sheets.setObjectName(_fromUtf8("verticalLayout_sheets"))
-        self.horizontalLayout.addLayout(self.verticalLayout_sheets)
+        self.verticalLayout_frame.addLayout(self.verticalLayout_sheets)
         self.verticalLayout.addWidget(self.frame)
         self.horizontalLayout_2.addLayout(self.verticalLayout)
 

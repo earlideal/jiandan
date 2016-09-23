@@ -12,13 +12,13 @@ class TestWindow(QtGui.QWidget):
         self.ui.pushButton.clicked.connect(self.remove_layout)
 
     def remove_layout(self):
-        print 'remove'
-        print isinstance(self.ui.pushButton_2, QtGui.QWidget)
-        print isinstance(self.ui.horizontalLayout, QtGui.QLayout)
         # self.ui.verticalLayout.removeItem(self.ui.horizontalLayout)
         # self.ui.horizontalLayout.deleteLater()
+        print self.ui.horizontalLayout.children()
         self.ui.verticalLayout.removeWidget(self.ui.pushButton_2)
         self.ui.pushButton_2.deleteLater()
+
+        print self.children()
 
 
 if __name__ == '__main__':

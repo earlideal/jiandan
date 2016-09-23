@@ -19,26 +19,26 @@ class PrintDialog(QtGui.QDialog):
 
     def _generate_sheets_list(self):
         temp = (''.join(map(lambda xx: (hex(ord(xx))[2:]), os.urandom(8)))).upper()
-        os.mkdir(temp)
+        # os.mkdir(temp)
         path = os.path.abspath(temp)
-        vbox = self.ui.verticalLayout_sheets
-        for child in vbox.children():
-            print type(child)
-            for w in child.children():
-                child.removeWidget(w)
-                w.deleterLater()
-            vbox.removeItem(child)
+
+        # frame.children()仅仅列出来最基础一层布局，不会列出来子布局
+        # 想要列出子布局，必须用子布局的父级进行枚举，但这种方式不能枚举出子widget
+        for child in self.ui.frame.children():
+            if isinstance(child, QtGui.QWidget):
+                self.ui.verticalLayout_sheets.removeWidget(child)
+                child.deleteLater()
+        for child in self.ui.verticalLayout_sheets.children():
+            self.ui.verticalLayout_sheets.removeItem(child)
 
         for s in self.sheets_name_zh:
             self._generate_on_print_numbers(s)
-
-        print len(vbox.children())
 
     def _generate_on_print_numbers(self, title_text):
         label_req = QtGui.QLabel()
         label_req.setText(title_text)
         numbered_buttons = []
-        for i in xrange(1, 3):
+        for i in xrange(1, 10):
             toolButton = QtGui.QToolButton()
             font = QtGui.QFont()
             font.setUnderline(True)
@@ -62,7 +62,7 @@ class PrintDialog(QtGui.QDialog):
 if __name__ == '__main__':
     app = QtGui.QApplication([])
     app.setFont(QtGui.QFont('trebuchet ms', 9))
-    app.setStyle('windowsvista')
+    app.setStyle('windows')
     dialog = PrintDialog()
     dialog.show()
     app.exec_()
