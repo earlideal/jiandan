@@ -16,11 +16,14 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
+
+
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -125,6 +128,7 @@ class Ui_Dialog(object):
         self.verticalLayout_frame = QtGui.QVBoxLayout(self.frame)
         self.verticalLayout_frame.setObjectName(_fromUtf8("verticalLayout_frame"))
         self.verticalLayout_sheets = QtGui.QVBoxLayout()
+        self.verticalLayout_sheets.setSpacing(0)
         self.verticalLayout_sheets.setObjectName(_fromUtf8("verticalLayout_sheets"))
         self.verticalLayout_frame.addLayout(self.verticalLayout_sheets)
         self.verticalLayout.addWidget(self.frame)
