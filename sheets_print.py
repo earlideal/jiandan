@@ -21,18 +21,18 @@ class PrintDialog(QtGui.QDialog):
         temp = (''.join(map(lambda xx: (hex(ord(xx))[2:]), os.urandom(8)))).upper()
         os.mkdir(temp)
         path = os.path.abspath(temp)
-        x = self.ui.verticalLayout_sheets
-        while x.count():
-            print x.count()
-            w = x.takeAt(0)
-            while w.count():
-                y = w.children[0]
-                w.removeWidget(y)
-                y.deleteLater()
-            w.deleteLater()
+        vbox = self.ui.verticalLayout_sheets
+        for child in vbox.children():
+            print type(child)
+            for w in child.children():
+                child.removeWidget(w)
+                w.deleterLater()
+            vbox.removeItem(child)
 
         for s in self.sheets_name_zh:
             self._generate_on_print_numbers(s)
+
+        print len(vbox.children())
 
     def _generate_on_print_numbers(self, title_text):
         label_req = QtGui.QLabel()
