@@ -13,6 +13,7 @@ class DashboardWindow(QtGui.QMainWindow):
         super(DashboardWindow, self).__init__()
         self.ui = dashboard_template.Ui_MainWindow()
         self.ui.setupUi(self)
+        self.ui.label.setFont(QtGui.QFont(u'方正启体简体', 28))
         self.ui.toolButton_home.clicked.connect(self.go_home)
         self.ui.toolButton_print.clicked.connect(self.show_print_dialog)
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>163</height>
+    <width>342</width>
+    <height>275</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,16 +62,8 @@
           </disabled>
          </palette>
         </property>
-        <property name="font">
-         <font>
-          <family>System</family>
-          <pointsize>18</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
         <property name="text">
-         <string>简·单</string>
+         <string>简单</string>
         </property>
        </widget>
       </item>
@@ -96,13 +88,6 @@
           <height>30</height>
          </size>
         </property>
-        <property name="font">
-         <font>
-          <family>Microsoft YaHei UI</family>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
         <property name="text">
          <string>首页</string>
         </property>
@@ -124,13 +109,6 @@
           <width>16777215</width>
           <height>30</height>
          </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Microsoft YaHei UI</family>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
         </property>
         <property name="text">
          <string>新建事务</string>
@@ -154,13 +132,6 @@
           <height>30</height>
          </size>
         </property>
-        <property name="font">
-         <font>
-          <family>Microsoft YaHei UI</family>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
         <property name="text">
          <string>保存事务</string>
         </property>
@@ -182,13 +153,6 @@
           <width>16777215</width>
           <height>30</height>
          </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Microsoft YaHei UI</family>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
         </property>
         <property name="text">
          <string>打印事务</string>

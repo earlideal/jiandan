@@ -123,7 +123,7 @@ class Ui_Dialog(object):
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
         self.frame = QtGui.QFrame(Dialog)
         self.frame.setFrameShape(QtGui.QFrame.Panel)
-        self.frame.setFrameShadow(QtGui.QFrame.Sunken)
+        self.frame.setFrameShadow(QtGui.QFrame.Raised)
         self.frame.setObjectName(_fromUtf8("frame"))
         self.verticalLayout_frame = QtGui.QVBoxLayout(self.frame)
         self.verticalLayout_frame.setObjectName(_fromUtf8("verticalLayout_frame"))

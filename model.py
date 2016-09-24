@@ -47,6 +47,12 @@ class PurchaseMethod(Model):
     name = Column(String)
 
 
+class PropertyType(Model):
+    __tablename__ = 'property_types'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+
 class Requisition(Model):
     __tablename__ = "requisitions"
     id = Column(Integer, primary_key=True)
@@ -105,7 +111,8 @@ class Inventory(Model):
     name = Column(String)
     model = Column(String)
     manufacture = Column(String)
-    property_type = Column(String)
+    property_type_id = Column(String, ForeignKey(PropertyType.id))
+    property_type = relationship(PropertyType)
     unit = Column(String)
     quantity = Column(Float)
     quotation_price = Column(Float)
@@ -116,11 +123,13 @@ class Inventory(Model):
     acceptance_sum = Column(Float)
     description = Column(String)
 
-    def __init__(self, swift_code, name, model, unit=u'只', quantity=1, quotation_price=0, quotation_currency='CNY',
-                 requisition_price=0, acceptance_price=0, description=''):
+    def __init__(self, swift_code, name, model, manufacture='', property_type_id=2, unit=u'只', quantity=1,
+                 quotation_price=0, quotation_currency='CNY', requisition_price=0, acceptance_price=0, description=''):
         self.swift_code = swift_code
         self.name = name
         self.model = model
+        self.manufacture = manufacture
+        self.property_type_id = property_type_id
         self.unit = unit
         self.quantity = quantity
         self.quotation_price = quotation_price
@@ -202,10 +211,19 @@ def preinstall_db():
 
     ####################################################################################################################
 
+    # 添加资产类型
+    property_types = [u'固定资产', u'低值易耗品', u'材料消耗品']
+    for i in xrange(len(property_types)):
+        p = PropertyType(id=i, name=property_types[i])
+        session.add(p)
+    session.commit()
+
+    ####################################################################################################################
+
     # 添加采购清单列表
-    for i in xrange(0, 30):
+    for i in xrange(0, 15):
         inventory = Inventory(swift_code=transaction.swift_code, name=u'针式打印机' + str(i), model='LQ-80KF', quantity=i,
-                              quotation_price=1234.56)
+                              quotation_price=123)
         session.add(inventory)
 
     session.commit()

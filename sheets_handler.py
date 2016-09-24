@@ -40,6 +40,19 @@ class PrintDialog(QtGui.QDialog):
                            'LADING_BILL_SHEET': False,
                            'FACILITY_SHEET': False}
 
+        # 遍历对话框中的checkbox组件，通过其objectName与sheets名称进行对应
+        for child in self.children():
+            if isinstance(child, QtGui.QGroupBox):
+                for c in child.children():
+                    if isinstance(c, QtGui.QCheckBox):
+                        name = c.objectName()
+                        name = unicode(name[9:]).upper()
+                        if to_be_generated.has_key(name):
+                            if c.isChecked() and c.isEnabled():
+                                to_be_generated[name] = True
+                            else:
+                                to_be_generated[name] = False
+
         self._fill_sheets_blanks(to_be_generated)
 
     def _fill_sheets_blanks(self, to_be_generated):
@@ -74,6 +87,7 @@ class PrintDialog(QtGui.QDialog):
         file = u'REQUISITION_SHEET.docx'
         sheet_name = file.split('.')[0]
         if to_be_generated[sheet_name]:
+            print u'正在生成%s ...' % self.sheets_name_zh[sheet_name]
             path = dir + file
             ROW_COUNT = 8
 
@@ -126,6 +140,7 @@ class PrintDialog(QtGui.QDialog):
             file = u'REQUISITION_REVIEW_TABLE_1.docx'
             word.ActiveDocument.SaveAs(file)
             word.ActiveDocument.Close()
+            self._generate_print_list(sheet_name, 1)
 
         #####################################
         # 合同评审表
@@ -169,6 +184,7 @@ class PrintDialog(QtGui.QDialog):
                 file = u'VERIFICATION_SHEET_%s.docx' % (i + 1)
                 word.ActiveDocument.SaveAs(file)
                 word.ActiveDocument.Close()
+                self._generate_print_list(sheet_name, paper_pieces)
 
         #####################################
         # 设备验收表
@@ -222,7 +238,7 @@ class PrintDialog(QtGui.QDialog):
 
     def print_relevant_sheet(self, file_name):
         # 此处困扰了我很久
-        # 在该方法中，word打开的文档路径不能与点击的按钮本身有任何联系（如按钮的text()等）
+        # 在该方法中，word打开的文档路径不能与点击的按钮本身有任何联系（如按钮的text()作为文件名等）
         # 否则会导致堆栈溢出错误，原因不明
         # 传递一般文本作为路径是可行的
         path = 'C:\Users\John\Documents' + os.path.sep + file_name

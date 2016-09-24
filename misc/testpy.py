@@ -1,5 +1,8 @@
 import win32print
 
-print win32print.EnumPrinters(win32print.PRINTER_ENUM_CONNECTIONS
-                              + win32print.PRINTER_ENUM_LOCAL)
-print win32print.GetDefaultPrinter()
+printers = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL)
+names = []
+for printer in printers:
+    names.append(printer[2])
+
+print names
