@@ -16,13 +16,12 @@ class InventoryWidget(QtGui.QWidget):
         self.ui = inventory_template.Ui_Form()
         self.ui.setupUi(self)
 
-        self.table_model = QtGui.QStandardItemModel()
         headers = [u'产品名称', u'型号规格', u'生产厂家', u'资产类型', u'单位', u'数量', u'原始报价',
                    u'报价币种', u'请购价格', u'请购金额', u'结算价格', u'结算金额']
         self.keys = ['name', 'model', 'manufacture', 'property_type', 'unit', 'quantity', 'quotation_price',
                      'quotation_currency', 'requisition_price', 'requisition_sum', 'acceptance_price', 'acceptance_sum']
+        self.table_model = QtGui.QStandardItemModel()
         self.table_model.setHorizontalHeaderLabels(headers)
-
         self.ui.tableView.setModel(self.table_model)
         self.ui.tableView.setAlternatingRowColors(True)
 
