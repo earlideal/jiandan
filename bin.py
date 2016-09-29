@@ -6,9 +6,9 @@ from dashboard import DashboardWindow
 
 if __name__ == '__main__':
     app = QtGui.QApplication([])
-    app.setFont(QtGui.QFont('Source Han Sans medium', 12))
-    # app.setFont(QtGui.QFont('trebuchet ms', 12))
-    app.setStyle('plastique')
+    QtGui.QFontDatabase.addApplicationFont("resources/Ping Hei Text.ttf")
+    app.setFont(QtGui.QFont('microsoft yahei', 10))
+    app.setStyle('windowsvista')
     window = DashboardWindow()
     window.showMaximized()
     app.exec_()
